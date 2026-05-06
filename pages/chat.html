@@ -558,6 +558,179 @@
       animation: pulse-accent 1.5s infinite;
     }
 
+    .mic-btn.processing {
+      color: var(--accent);
+      background: rgba(201, 169, 110, 0.12);
+      box-shadow: 0 0 0 2px rgba(201, 169, 110, 0.18);
+    }
+
+    .msg-act.speak-toggle {
+      min-width: 170px;
+      justify-content: center;
+    }
+
+    .msg-act.speak-toggle[data-state="speaking"] {
+      background: rgba(255, 217, 110, 0.18);
+      color: var(--accent);
+      border-color: rgba(255, 217, 110, 0.25);
+    }
+
+    .msg-act.speak-toggle[data-state="stopped"] {
+      background: var(--bg2);
+    }
+
+    .lawyer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .3px;
+      border: 1px solid rgba(255, 217, 110, 0.2);
+      color: #FFD96A;
+      background: rgba(255, 217, 110, 0.08);
+    }
+
+    .lawyer-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .lawyer-status.available { background: rgba(74, 222, 128, 0.12); color: #4ADE80; }
+    .lawyer-status.busy { background: rgba(248, 113, 113, 0.12); color: #F87171; }
+
+    .profile-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(5, 8, 18, 0.82);
+      backdrop-filter: blur(16px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease;
+    }
+    .profile-modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .profile-modal {
+      width: min(900px, 100%);
+      max-height: calc(100vh - 48px);
+      background: linear-gradient(180deg, rgba(10, 12, 24, 0.98), rgba(15, 18, 35, 0.98));
+      border: 1px solid rgba(255, 217, 110, 0.16);
+      border-radius: 24px;
+      box-shadow: 0 28px 70px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .profile-modal-inner {
+      padding: 26px 30px;
+      overflow-y: auto;
+      flex: 1;
+      display: grid;
+      gap: 22px;
+    }
+    .profile-modal-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 12px;
+    }
+    .profile-modal-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--tp);
+      margin-bottom: 6px;
+    }
+    .profile-profile-subtitle {
+      color: var(--ts);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    [data-theme="light"] .lawyer-modal {
+      background: #FFFFFF;
+      border-color: rgba(154,111,30,0.18);
+      box-shadow: 0 22px 60px rgba(0,0,0,0.08);
+    }
+    [data-theme="light"] .lawyer-card {
+      background: #FFF9F0;
+      border-color: rgba(154,111,30,0.18);
+      box-shadow: 0 18px 44px rgba(0,0,0,0.07);
+    }
+    [data-theme="light"] .lawyer-avatar {
+      background: linear-gradient(135deg, #FFD96A 0%, #F5A936 100%);
+      color: #1A1A1A;
+    }
+    [data-theme="light"] .lawyer-modal-overlay {
+      background: rgba(255,255,255,0.92);
+    }
+    [data-theme="light"] .profile-modal {
+      background: #FFFDF8;
+      border-color: rgba(154,111,30,0.18);
+    }
+    [data-theme="light"] .profile-card {
+      background: #FEF6E7;
+    }
+    [data-theme="light"] .profile-profile-subtitle {
+      color: #6B6560;
+    }
+    [data-theme="light"] .lawyer-filter select {
+      background: #FFFFFF;
+      color: #1A1A1A;
+      border-color: rgba(154,111,30,0.18);
+    }
+    .profile-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+      gap: 22px;
+    }
+    .profile-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 217, 110, 0.1);
+      border-radius: 20px;
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+    .profile-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+    .profile-row strong { color: var(--tp); font-size: 13px; }
+    .profile-row span { color: var(--ts); font-size: 13px; }
+    .profile-detail { color: var(--ts); font-size: 13px; line-height: 1.8; }
+    .profile-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .profile-ratings { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--tp); }
+
+    @media (max-width: 880px) {
+      .profile-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .lawyer-modal { max-height: calc(100vh - 12px); }
+      .lawyer-modal-filters { grid-template-columns: 1fr; gap: 10px; }
+      .lawyer-card { padding: 18px; }
+      .lawyer-card-top { flex-direction: column; align-items: stretch; }
+      .lawyer-card-right { align-items: stretch; justify-content: stretch; }
+      .msg-actions { flex-direction: column; align-items: stretch; }
+      .msg-act { width: 100%; justify-content: center; }
+    }
+
     @keyframes pulse-red {
       0% {
         box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
@@ -1264,11 +1437,33 @@
     </div>
   </div>
 
+  <div class="profile-modal-overlay" id="profile-modal-overlay" onclick="if (event.target === this) closeProfileModal()">
+    <div class="profile-modal" role="dialog" aria-modal="true" aria-labelledby="profile-modal-title">
+      <div class="profile-modal-head">
+        <div>
+          <div class="modal-eyebrow">Lawyer Profile</div>
+          <h2 class="profile-modal-title" id="profile-modal-title">Trusted legal counsel</h2>
+          <div class="profile-profile-subtitle" id="profile-modal-subtitle">Review experience, ratings, and how this counsel can help your case.</div>
+        </div>
+        <button class="lawyer-modal-close" onclick="closeProfileModal()" aria-label="Close lawyer profile">✕</button>
+      </div>
+      <div class="profile-modal-inner" id="profile-modal-inner">
+        <div class="profile-grid">
+          <div class="profile-card" id="profile-overview-card"></div>
+          <div class="profile-card" id="profile-details-card"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ── STATE ──
     let history = [];
     let lang = 'en';
     let busy = false;
+    let lastInputMethod = 'text';
+    let currentSpeechMessageId = null;
+    let currentSpeechUtterance = null;
 
     const LANGUAGE_PROMPTS = {
       en: 'Respond in clear English.',
@@ -1376,6 +1571,12 @@
       document.getElementById('welcome')?.remove();
 
       busy = true;
+      if (lastInputMethod !== 'voice') lastInputMethod = 'text';
+      if (lastInputMethod === 'voice') {
+        updateMicState('processing');
+      } else {
+        updateMicState('idle');
+      }
       document.getElementById('send-btn').disabled = true;
       inp.value = ''; inp.style.height = 'auto';
 
@@ -1426,6 +1627,7 @@ Rules:
       <div class="msg-row a" id="${mid}">
         <div class="msg-bubble">${formatMarkdown(reply)}</div>
         <div class="msg-actions">
+          <button class="msg-act speak-toggle" id="speak-btn-${mid}" data-state="stopped" onclick="toggleSpeak('${mid}')">🔊 Speak Response</button>
           <a href="documents.html" class="msg-act primary" style="text-decoration:none">Create Legal Document</a>
           <div class="msg-dropdown">
             <button class="msg-act" style="background:transparent; padding: 6px;">⋮</button>
@@ -1455,8 +1657,10 @@ Rules:
     `);
         scrollDown();
 
-        if (typeof speakResponse === 'function') {
-          speakResponse(reply, lang);
+        if (lastInputMethod === 'voice' && typeof speakResponse === 'function') {
+          speakResponse(reply, lang, mid);
+        } else {
+          updateMicState('idle');
         }
       } catch (err) {
         document.getElementById(tid)?.remove();
@@ -1468,6 +1672,7 @@ Rules:
         </div>
       </div>`);
         scrollDown();
+        updateMicState('idle');
       }
 
       busy = false;
@@ -1481,11 +1686,72 @@ Rules:
     }
 
     // ── LAWYER CONNECTIVITY ──
+    const SAMPLE_LAWYERS = [
+      {
+        id: 'sample1',
+        name: 'Aditi Sharma',
+        initials: 'AS',
+        specialization: 'Consumer Protection',
+        experience: '11 Years',
+        location: 'Delhi',
+        fee: 2200,
+        rating: 4.9,
+        verified: true,
+        tags: ['Consumer', 'Contracts', 'E-commerce'],
+        languages: ['English', 'Hindi'],
+        availability: 'Available',
+        summary: 'Experienced in fast-tracking consumer claim notices and refund disputes for individuals and small businesses.',
+        successRate: '92%',
+        completedCases: 185,
+        reviews: '124 reviews',
+        bio: 'A senior consumer lawyer who guides clients through notice drafting, mediation, and tribunal representation with clear legal strategy.'
+      },
+      {
+        id: 'sample2',
+        name: 'Rohit Singh',
+        initials: 'RS',
+        specialization: 'Family Law',
+        experience: '9 Years',
+        location: 'Mumbai',
+        fee: 2500,
+        rating: 4.8,
+        verified: true,
+        tags: ['Divorce', 'Custody', 'Maintenance'],
+        languages: ['English', 'Hindi', 'Marathi'],
+        availability: 'Available',
+        summary: 'Trusted family law advocate with experience in divorce settlements, child custody planning, and protection orders.',
+        successRate: '89%',
+        completedCases: 138,
+        reviews: '109 reviews',
+        bio: 'Rohit combines empathetic client support with strong courtroom preparation for family disputes across Maharashtra.'
+      },
+      {
+        id: 'sample3',
+        name: 'Neha Iyer',
+        initials: 'NI',
+        specialization: 'Property & Real Estate',
+        experience: '13 Years',
+        location: 'Bangalore',
+        fee: 2700,
+        rating: 4.7,
+        verified: true,
+        tags: ['Property', 'Lease', 'Title Dispute'],
+        languages: ['English', 'Kannada', 'Hindi'],
+        availability: 'Busy',
+        summary: 'Skilled at fast property title reviews, tenant disputes, and agreements for residential and commercial cases.',
+        successRate: '90%',
+        completedCases: 212,
+        reviews: '148 reviews',
+        bio: 'Neha provides clients with practical property advice and smooth documentation for sale, lease and dispute resolution.'
+      }
+    ];
+
     const lawyerModalState = {
       activeCase: null,
       lawyers: [],
       filters: { caseType: 'All', budget: 'Any', location: 'All' }
     };
+    let activeLawyerProfile = null;
 
     function isValidObjectId(id) {
       return /^[0-9a-fA-F]{24}$/.test(String(id || '').trim());
@@ -1592,39 +1858,43 @@ Rules:
       const count = document.getElementById('lawyer-match-count');
       if (!container || !count) return;
       const display = lawyerModalState.lawyers.filter(filterLawyers);
-      count.textContent = `${display.length} lawyers matched`; 
+      count.textContent = `${display.length} lawyers matched`;
       if (!display.length) {
         container.innerHTML = `<div class="lawyer-empty-state">No lawyers matched your filters. Try a broader search or adjust budget/location.</div>`;
         return;
       }
       container.innerHTML = display.map(lawyer => {
-        const verifiedBadge = lawyer.verified ? '<span class="lawyer-badge verified">Verified</span>' : '<span class="lawyer-badge">Verified soon</span>';
+        const verifiedBadge = lawyer.verified ? '<span class="lawyer-badge">Verified</span>' : '<span class="lawyer-badge">Verified soon</span>';
+        const languages = (lawyer.languages || []).slice(0, 3).map(lang => `<span class="lawyer-tag">${lang}</span>`).join('');
+        const availabilityClass = lawyer.availability && lawyer.availability.toLowerCase().includes('available') ? 'available' : 'busy';
         return `
           <div class="lawyer-card">
-            <div class="lawyer-card-left">
+            <div class="lawyer-card-top">
               <div class="lawyer-avatar">${lawyer.initials}</div>
-              <div class="lawyer-info">
-                <div class="lawyer-name">${lawyer.name}</div>
-                <div class="lawyer-subtitle">${lawyer.specialization}</div>
-                <div class="lawyer-meta-row">
-                  <span>${lawyer.experience}</span>
-                  <span>•</span>
-                  <span>${lawyer.location}</span>
+              <div class="lawyer-card-header">
+                <div class="lawyer-name-badge">
+                  <div class="lawyer-name">${lawyer.name}</div>
+                  ${verifiedBadge}
                 </div>
+                <div class="lawyer-quals">${lawyer.specialization} • ${lawyer.experience} • ${lawyer.location}</div>
+                <div class="lawyer-rating-row">
+                  <div class="lawyer-rating">⭐ ${Number(lawyer.rating || 0).toFixed(1)}</div>
+                  <div class="lawyer-reviews">${lawyer.reviews || 'No reviews yet'}</div>
+                </div>
+                <div class="lawyer-tags">${languages || `<span class="lawyer-tag">${lawyer.specialization}</span>`}</div>
+              </div>
+              <div class="lawyer-card-right">
+                <div class="lawyer-fee">₹${Number(lawyer.fee || 1800).toLocaleString()}</div>
+                <div class="lawyer-fee-label">Consultation fee</div>
+                <div class="lawyer-status ${availabilityClass}">${lawyer.availability || 'Available'}</div>
               </div>
             </div>
             <div class="lawyer-card-middle">
-              <div class="lawyer-tags">${(lawyer.tags || []).slice(0, 3).map(tag => `<span class="lawyer-tag">${tag}</span>`).join('')}</div>
-              <div class="lawyer-summary">${lawyer.summary}</div>
-            </div>
-            <div class="lawyer-card-right">
-              <div class="lawyer-fee">₹${lawyer.fee.toLocaleString()}</div>
-              <div class="lawyer-rating">⭐ ${lawyer.rating.toFixed(1)}</div>
+              <div class="lawyer-summary">${lawyer.summary || 'Professional lawyer ready to review your case and brief you on next steps.'}</div>
               <div class="lawyer-actions">
-                <button class="btn btn-primary btn-sm" onclick="sendCaseToLawyer('${lawyer.id}', this)">Send Case</button>
-                <button class="btn btn-ghost btn-sm" onclick="bookConsultation('${lawyer.id}', this)">Book Consultation</button>
+                <button class="btn btn-ghost btn-sm" onclick="openLawyerProfile('${lawyer.id}')">View Profile</button>
+                <button class="btn btn-primary btn-sm" onclick="connectNow('${lawyer.id}', this)">Connect Now</button>
               </div>
-              ${verifiedBadge}
             </div>
           </div>`;
       }).join('');
@@ -1648,7 +1918,13 @@ Rules:
       try {
         const data = await fetchMatchedLawyers(caseId);
         lawyerModalState.activeCase = data.case || window.currentCaseContext || {};
-        lawyerModalState.lawyers = (data.lawyers || []).map(lawyer => ({ ...lawyer, initials: lawyer.initials || (lawyer.name || 'U').split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase() }));
+        const matches = data.lawyers && data.lawyers.length ? data.lawyers : SAMPLE_LAWYERS;
+        lawyerModalState.lawyers = matches.map(lawyer => ({
+          ...lawyer,
+          initials: lawyer.initials || (lawyer.name || 'U').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase(),
+          availability: lawyer.availability || 'Available',
+          languages: lawyer.languages || lawyer.tags || []
+        }));
         lawyerModalState.filters.caseType = lawyerModalState.activeCase.problemType || 'All';
         document.getElementById('lawyer-filter-type').value = lawyerModalState.filters.caseType;
         renderLawyerModalHeader();
@@ -1656,12 +1932,13 @@ Rules:
       } catch (err) {
         console.error(err);
         lawyerModalState.activeCase = window.currentCaseContext || { problemType: 'General', summary: window.lastUserText || 'Your query' };
+        lawyerModalState.lawyers = SAMPLE_LAWYERS;
         lawyerModalState.filters.caseType = lawyerModalState.activeCase.problemType || 'All';
         document.getElementById('lawyer-filter-type').value = lawyerModalState.filters.caseType;
         renderLawyerModalHeader();
         if (count) count.textContent = 'Unable to load lawyer matches';
         if (body) body.innerHTML = `<div class="lawyer-error">Unable to load matching lawyers. Please try again shortly.</div>`;
-        throw err;
+        renderLawyerCards();
       }
     }
 
@@ -1681,8 +1958,8 @@ Rules:
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Request failed.');
-        showToast(successMessage);
-        button.textContent = 'Done';
+        showToast(successMessage || 'Your case has been shared with the lawyer.');
+        button.textContent = 'Connected';
         button.classList.remove('btn-ghost');
         button.classList.add('btn-primary');
         closeLawyerModal();
@@ -1695,12 +1972,66 @@ Rules:
       }
     }
 
-    async function sendCaseToLawyer(lawyerId, button) {
-      await submitLawyerRequest(lawyerId, button, '/send-case', 'Case sent successfully to lawyer', 'Send Case');
+    async function connectNow(lawyerId, button) {
+      await submitLawyerRequest(lawyerId, button, '/send-case', 'Your case has been shared with the lawyer.', 'Connect Now');
     }
 
     async function bookConsultation(lawyerId, button) {
-      await submitLawyerRequest(lawyerId, button, '/book-consultation', 'Consultation request sent to lawyer', 'Book Consultation');
+      await submitLawyerRequest(lawyerId, button, '/book-consultation', 'Consultation request sent to lawyer.', 'Book Consultation');
+    }
+
+    function openLawyerProfile(lawyerId) {
+      const lawyer = lawyerModalState.lawyers.find(l => String(l.id) === String(lawyerId));
+      if (!lawyer) {
+        showToast('Unable to find lawyer profile.', '⚠');
+        return;
+      }
+      activeLawyerProfile = lawyer;
+      const overlay = document.getElementById('profile-modal-overlay');
+      overlay?.classList.add('open');
+      renderLawyerProfile(lawyer);
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProfileModal() {
+      const overlay = document.getElementById('profile-modal-overlay');
+      overlay?.classList.remove('open');
+      document.body.style.overflow = '';
+      activeLawyerProfile = null;
+    }
+
+    function renderLawyerProfile(lawyer) {
+      const overview = document.getElementById('profile-overview-card');
+      const details = document.getElementById('profile-details-card');
+      if (!overview || !details) return;
+      overview.innerHTML = `
+        <div class="profile-row">
+          <div>
+            <div class="lawyer-avatar" style="font-size:28px; width:72px; height:72px;">${lawyer.initials}</div>
+          </div>
+          <div style="flex:1;">
+            <div class="lawyer-name">${lawyer.name}</div>
+            <div class="lawyer-quals">${lawyer.specialization} • ${lawyer.location}</div>
+            <div class="lawyer-rating-row" style="margin-top:10px; gap:10px;">
+              <span class="lawyer-rating">⭐ ${Number(lawyer.rating || 0).toFixed(1)}</span>
+              <span class="lawyer-reviews">${lawyer.reviews || 'No reviews yet'}</span>
+            </div>
+          </div>
+        </div>
+        <div class="profile-actions">
+          <button class="btn btn-primary btn-sm" onclick="connectNow('${lawyer.id}', this)">Connect Now</button>
+          <button class="btn btn-ghost btn-sm" onclick="closeProfileModal()">Close</button>
+        </div>
+      `;
+      details.innerHTML = `
+        <div class="profile-row"><strong>Experience</strong><span>${lawyer.experience}</span></div>
+        <div class="profile-row"><strong>Success rate</strong><span>${lawyer.successRate || '90%'}</span></div>
+        <div class="profile-row"><strong>Consultation fee</strong><span>₹${Number(lawyer.fee || 1800).toLocaleString()}</span></div>
+        <div class="profile-row"><strong>Languages</strong><span>${(lawyer.languages || []).join(', ') || 'English, Hindi'}</span></div>
+        <div class="profile-row"><strong>Availability</strong><span>${lawyer.availability || 'Available'}</span></div>
+        <div class="profile-row"><strong>Completed cases</strong><span>${lawyer.completedCases || 0}</span></div>
+        <div class="profile-detail">${lawyer.bio || lawyer.summary || 'A skilled lawyer with strong legal experience and modern client support.'}</div>
+      `;
     }
 
     window.findLawyer = async function (mid) {
@@ -1737,6 +2068,45 @@ Rules:
     let isListening = false;
     let isSpeaking = false;
 
+    function updateMicState(state) {
+      const mic = document.getElementById('mic-btn');
+      if (!mic) return;
+      mic.classList.toggle('listening', state === 'listening');
+      mic.classList.toggle('processing', state === 'processing');
+      mic.classList.toggle('speaking', state === 'speaking');
+      mic.title = state === 'listening'
+        ? 'Stop listening'
+        : state === 'processing'
+          ? 'Processing voice...'
+          : state === 'speaking'
+            ? 'Stop speaking'
+            : 'Voice Input';
+    }
+
+    function updateSpeakButtonStates() {
+      document.querySelectorAll('.speak-toggle').forEach(button => {
+        if (button.id === `speak-btn-${currentSpeechMessageId}` && isSpeaking) {
+          button.textContent = '⏹ Stop Voice';
+          button.dataset.state = 'speaking';
+        } else {
+          button.textContent = '🔊 Speak Response';
+          button.dataset.state = 'stopped';
+        }
+      });
+    }
+
+    function toggleSpeak(messageId) {
+      if (currentSpeechMessageId === messageId && isSpeaking) {
+        stopSpeaking();
+        return;
+      }
+      const bubble = document.getElementById(messageId)?.querySelector('.msg-bubble');
+      if (!bubble) return;
+      const responseText = bubble.innerText || bubble.textContent || '';
+      if (!responseText.trim()) return;
+      speakResponse(responseText, lang, messageId);
+    }
+
     function initVoice() {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
@@ -1756,9 +2126,8 @@ Rules:
 
       recognition.onstart = () => {
         isListening = true;
-        const mic = document.getElementById('mic-btn');
-        mic.classList.add('listening');
-        mic.title = 'Stop listening';
+        lastInputMethod = 'voice';
+        updateMicState('listening');
         document.getElementById('chat-input').placeholder = 'Listening...';
       };
 
@@ -1776,6 +2145,7 @@ Rules:
 
         const inp = document.getElementById('chat-input');
         if (finalTranscript) {
+          lastInputMethod = 'voice';
           inp.value = finalTranscript;
           autoGrow(inp);
         } else if (interimTranscript) {
@@ -1836,8 +2206,7 @@ Rules:
 
       const mic = document.getElementById('mic-btn');
       if (mic) {
-        mic.classList.remove('listening');
-        mic.title = 'Voice Input';
+        updateMicState('idle');
       }
 
       const inp = document.getElementById('chat-input');
@@ -1854,7 +2223,7 @@ Rules:
       return text.replace(/\*\*/g, '').replace(/\*/g, '').replace(/#/g, '').replace(/\[(.*?)\]\(.*?\)/g, '$1');
     }
 
-    function speakResponse(text, currentLang) {
+    function speakResponse(text, currentLang, messageId) {
       if (!('speechSynthesis' in window)) return;
 
       stopSpeaking(); // Stop any current speech
@@ -1864,7 +2233,9 @@ Rules:
       const vLang = VOICE_LANGS[currentLang] || 'en-IN';
 
       utterance.lang = vLang;
-      utterance.rate = 1.0;
+      utterance.rate = 1.02;
+      utterance.pitch = 1.0;
+      utterance.volume = 1;
 
       const voices = speechSynthesis.getVoices();
       const voice = voices.find(v => v.lang.startsWith(vLang) || v.lang.startsWith(currentLang))
@@ -1875,20 +2246,27 @@ Rules:
 
       utterance.onstart = () => {
         isSpeaking = true;
-        document.getElementById('mic-btn')?.classList.add('speaking');
+        currentSpeechMessageId = messageId || null;
+        updateMicState('speaking');
+        updateSpeakButtonStates();
       };
 
       utterance.onend = () => {
         isSpeaking = false;
-        document.getElementById('mic-btn')?.classList.remove('speaking');
+        currentSpeechMessageId = null;
+        updateMicState('idle');
+        updateSpeakButtonStates();
       };
 
       utterance.onerror = () => {
         isSpeaking = false;
-        document.getElementById('mic-btn')?.classList.remove('speaking');
+        currentSpeechMessageId = null;
+        updateMicState('idle');
+        updateSpeakButtonStates();
       };
 
-      speechSynthesis.speak(utterance);
+      currentSpeechUtterance = utterance;
+      window.speechSynthesis.speak(utterance);
     }
 
     function stopSpeaking() {
@@ -1896,7 +2274,9 @@ Rules:
         speechSynthesis.cancel();
       }
       isSpeaking = false;
-      document.getElementById('mic-btn')?.classList.remove('speaking');
+      currentSpeechMessageId = null;
+      updateMicState('idle');
+      updateSpeakButtonStates();
     }
 
     if ('speechSynthesis' in window) {
