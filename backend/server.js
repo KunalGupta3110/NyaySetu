@@ -550,18 +550,34 @@ app.get("/case/:caseId", async (req, res) => {
 
 app.get("/cases", async (req, res) => {
   try {
-    const matchedCases = await getMatchedCasesForLawyer(req.query.lawyerId);
-    const applications = req.query.lawyerId && isValidObjectId(req.query.lawyerId)
-      ? await Application.find({ lawyerId: req.query.lawyerId }).select("caseId status")
+    const { lawyerId, reviewStatus } = req.query;
+    
+    let query = {};
+    
+    if (reviewStatus) {
+      query.reviewStatus = reviewStatus;
+    } else {
+      // Default behavior for backward compatibility
+      query.status = { $in: ["pending_review", "open"] };
+    }
+    
+    if (lawyerId && isValidObjectId(lawyerId)) {
+      query.assignedLawyerId = lawyerId;
+    }
+    
+    const cases = await Case.find(query).sort({ createdAt: -1 }).limit(50);
+    
+    const applications = lawyerId && isValidObjectId(lawyerId)
+      ? await Application.find({ lawyerId }).select("caseId status")
       : [];
     const applicationMap = new Map(applications.map(app => [String(app.caseId), app.status]));
 
-    res.json(matchedCases.map(caseData => ({
+    res.json(cases.map(caseData => ({
       ...serializeCase(caseData),
       applicationStatus: applicationMap.get(String(caseData._id)) || null
     })));
   } catch (err) {
-    res.status(500).json({ error: "Failed to fetch open cases." });
+    res.status(500).json({ error: "Failed to fetch cases." });
   }
 });
 
@@ -864,6 +880,132 @@ app.get("/match-lawyers/:caseId", async (req, res) => {
     res.json({ case: serializeCase(caseData), lawyers: matched.slice(0, 3) });
   } catch (err) {
     res.status(500).json({ error: "Failed to match lawyers." });
+  }
+});
+
+// ================= LAWYER REVIEW WORKFLOW ROUTES =================
+
+app.post("/update-review-status", async (req, res) => {
+  try {
+    const { caseId, reviewStatus, lawyerId } = req.body || {};
+    
+    if (!isValidObjectId(caseId)) {
+      return res.status(400).json({ error: "Invalid caseId." });
+    }
+
+    const caseData = await Case.findById(caseId);
+    if (!caseData) {
+      return res.status(404).json({ error: "Case not found." });
+    }
+
+    // Check if lawyer is assigned
+    if (lawyerId && String(caseData.assignedLawyerId) !== String(lawyerId)) {
+      return res.status(403).json({ error: "Only assigned lawyer can update review status." });
+    }
+
+    const validStatuses = ['draft', 'pending_review', 'under_review', 'verified', 'completed'];
+    if (!validStatuses.includes(reviewStatus)) {
+      return res.status(400).json({ error: "Invalid review status." });
+    }
+
+    caseData.reviewStatus = reviewStatus;
+    if (reviewStatus === 'verified') {
+      caseData.reviewedAt = new Date();
+    }
+
+    await caseData.save();
+    res.json(serializeCase(caseData));
+  } catch (err) {
+    res.status(500).json({ error: err.message || "Failed to update review status." });
+  }
+});
+
+app.post("/add-lawyer-notes", async (req, res) => {
+  try {
+    const { caseId, notes, lawyerId } = req.body || {};
+    
+    if (!isValidObjectId(caseId)) {
+      return res.status(400).json({ error: "Invalid caseId." });
+    }
+
+    const caseData = await Case.findById(caseId);
+    if (!caseData) {
+      return res.status(404).json({ error: "Case not found." });
+    }
+
+    // Check if lawyer is assigned
+    if (lawyerId && String(caseData.assignedLawyerId) !== String(lawyerId)) {
+      return res.status(403).json({ error: "Only assigned lawyer can add notes." });
+    }
+
+    caseData.lawyerNotes = String(notes || "").trim();
+    await caseData.save();
+    res.json(serializeCase(caseData));
+  } catch (err) {
+    res.status(500).json({ error: err.message || "Failed to add lawyer notes." });
+  }
+});
+
+app.post("/upload-stamped-document", async (req, res) => {
+  try {
+    const { caseId, finalDocumentUrl, lawyerId } = req.body || {};
+    
+    if (!isValidObjectId(caseId)) {
+      return res.status(400).json({ error: "Invalid caseId." });
+    }
+
+    const caseData = await Case.findById(caseId);
+    if (!caseData) {
+      return res.status(404).json({ error: "Case not found." });
+    }
+
+    // Check if lawyer is assigned
+    if (lawyerId && String(caseData.assignedLawyerId) !== String(lawyerId)) {
+      return res.status(403).json({ error: "Only assigned lawyer can upload stamped document." });
+    }
+
+    caseData.finalDocumentUrl = String(finalDocumentUrl || "").trim();
+    caseData.reviewStatus = 'completed';
+    caseData.completedAt = new Date();
+    await caseData.save();
+    res.json(serializeCase(caseData));
+  } catch (err) {
+    res.status(500).json({ error: err.message || "Failed to upload stamped document." });
+  }
+});
+
+app.post("/update-payment-status", async (req, res) => {
+  try {
+    const { caseId, paymentStatus, amount, currency = 'INR' } = req.body || {};
+    
+    if (!isValidObjectId(caseId)) {
+      return res.status(400).json({ error: "Invalid caseId." });
+    }
+
+    const caseData = await Case.findById(caseId);
+    if (!caseData) {
+      return res.status(404).json({ error: "Case not found." });
+    }
+
+    const validPaymentStatuses = ['pending', 'paid', 'failed'];
+    if (!validPaymentStatuses.includes(paymentStatus)) {
+      return res.status(400).json({ error: "Invalid payment status." });
+    }
+
+    caseData.paymentStatus = paymentStatus;
+    if (paymentStatus === 'paid') {
+      caseData.payment = {
+        amount: Number(amount) || caseData.payment?.amount || 0,
+        currency,
+        reference: caseData.payment?.reference || ''
+      };
+      caseData.paidAt = new Date();
+    }
+
+    await caseData.save();
+    res.json(serializeCase(caseData));
+  } catch (err) {
+    res.status(500).json({ error: err.message || "Failed to update payment status." });
   }
 });
 

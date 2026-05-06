@@ -25,6 +25,19 @@ const CaseSchema = new mongoose.Schema({
     currency: { type: String, default: 'INR' },
     reference: { type: String }
   },
+  // New fields for review workflow
+  reviewStatus: {
+    type: String,
+    enum: ['draft', 'pending_review', 'under_review', 'verified', 'completed'],
+    default: 'draft'
+  },
+  reviewedAt: { type: Date },
+  paymentStatus: {
+    type: String,
+    enum: ['pending', 'paid', 'failed'],
+    default: 'pending'
+  },
+  finalDocumentUrl: { type: String },
   createdAt: { type: Date, default: Date.now }
 });
 

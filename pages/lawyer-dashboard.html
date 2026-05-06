@@ -195,6 +195,31 @@
       text-transform: capitalize;
       white-space: nowrap;
     }
+    .status-badge.draft {
+      background: var(--bg3);
+      color: var(--ts);
+      border-color: var(--border2);
+    }
+    .status-badge.pending_review {
+      background: rgba(251, 191, 36, 0.1);
+      color: #f59e0b;
+      border-color: rgba(251, 191, 36, 0.3);
+    }
+    .status-badge.under_review {
+      background: rgba(59, 130, 246, 0.1);
+      color: #3b82f6;
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+    .status-badge.verified {
+      background: rgba(34, 197, 94, 0.1);
+      color: #22c55e;
+      border-color: rgba(34, 197, 94, 0.3);
+    }
+    .status-badge.completed {
+      background: linear-gradient(135deg, rgba(201,169,110,.1), rgba(201,169,110,.2));
+      color: var(--accent);
+      border-color: rgba(201,169,110,.4);
+    }
     .case-actions {
       display: flex;
       justify-content: flex-end;
@@ -291,29 +316,51 @@
     </section>
 
     <nav class="tabs" aria-label="Lawyer dashboard tabs">
-      <button class="tab-btn active" type="button" data-tab="cases" onclick="switchTab('cases')">Available Cases</button>
-      <button class="tab-btn" type="button" data-tab="applications" onclick="switchTab('applications')">My Applications</button>
+      <button class="tab-btn active" type="button" data-tab="open" onclick="switchTab('open')">Open Cases</button>
+      <button class="tab-btn" type="button" data-tab="review" onclick="switchTab('review')">Under Review</button>
+      <button class="tab-btn" type="button" data-tab="verified" onclick="switchTab('verified')">Verified Documents</button>
+      <button class="tab-btn" type="button" data-tab="completed" onclick="switchTab('completed')">Completed Cases</button>
     </nav>
 
-    <section class="tab-panel active" id="tab-cases">
+    <section class="tab-panel active" id="tab-open">
       <div class="panel-head">
         <div>
-          <div class="panel-title">Available Cases</div>
-          <div class="panel-note">Matched by case type, location, and language where your profile has enough information.</div>
+          <div class="panel-title">Open Cases</div>
+          <div class="panel-note">New cases available for review. Apply to cases that match your expertise.</div>
         </div>
         <button class="btn-ghost btn-sm" type="button" onclick="loadDashboardData()">Refresh</button>
       </div>
-      <div class="case-list" id="available-cases-list"></div>
+      <div class="case-list" id="open-cases-list"></div>
     </section>
 
-    <section class="tab-panel" id="tab-applications">
+    <section class="tab-panel" id="tab-review">
       <div class="panel-head">
         <div>
-          <div class="panel-title">My Applications</div>
-          <div class="panel-note">Pending means the user/admin has not assigned the case yet. Accepted means you can review and approve.</div>
+          <div class="panel-title">Under Review</div>
+          <div class="panel-note">Cases you've been assigned to review. Check documents and provide approval.</div>
         </div>
       </div>
-      <div class="case-list" id="my-applications-list"></div>
+      <div class="case-list" id="review-cases-list"></div>
+    </section>
+
+    <section class="tab-panel" id="tab-verified">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">Verified Documents</div>
+          <div class="panel-note">Documents you've reviewed and approved. Ready for final stamping.</div>
+        </div>
+      </div>
+      <div class="case-list" id="verified-cases-list"></div>
+    </section>
+
+    <section class="tab-panel" id="tab-completed">
+      <div class="panel-head">
+        <div>
+          <div class="panel-title">Completed Cases</div>
+          <div class="panel-note">Successfully completed cases with final documents delivered.</div>
+        </div>
+      </div>
+      <div class="case-list" id="completed-cases-list"></div>
     </section>
   </main>
 
@@ -339,65 +386,76 @@
     }
 
     async function loadDashboardData() {
-      await Promise.all([fetchAvailableCases(), fetchMyApplications()]);
+      await Promise.all([
+        fetchCasesByStatus('open', 'open-cases-list'),
+        fetchCasesByStatus('under_review', 'review-cases-list'),
+        fetchCasesByStatus('verified', 'verified-cases-list'),
+        fetchCasesByStatus('completed', 'completed-cases-list')
+      ]);
     }
 
-    async function fetchAvailableCases() {
-      const container = document.getElementById('available-cases-list');
-      container.innerHTML = '<div class="loading-state">Loading matched cases...</div>';
+    async function fetchCasesByStatus(reviewStatus, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '<div class="loading-state">Loading cases...</div>';
 
       try {
-        const res = await fetch(`${API_BASE}/cases?lawyerId=${encodeURIComponent(dashboardUser.id || '')}`);
+        const params = new URLSearchParams({
+          lawyerId: dashboardUser.id || '',
+          reviewStatus: reviewStatus
+        });
+        const res = await fetch(`${API_BASE}/cases?${params}`);
         if (!res.ok) throw new Error('Failed to fetch cases');
         const cases = await res.json();
-        document.getElementById('stat-cases').textContent = cases.length;
 
         if (!cases.length) {
-          container.innerHTML = emptyState('No matched cases', 'Cases appear here after users request lawyer review and match your profile.');
+          const messages = {
+            open: ['No open cases', 'New cases will appear here when users request lawyer review.'],
+            under_review: ['No cases under review', 'Assigned cases for review will appear here.'],
+            verified: ['No verified documents', 'Approved documents ready for stamping will appear here.'],
+            completed: ['No completed cases', 'Successfully delivered cases will appear here.']
+          };
+          container.innerHTML = emptyState(messages[reviewStatus][0], messages[reviewStatus][1]);
           return;
         }
 
-        container.innerHTML = cases.map(renderCaseCard).join('');
+        container.innerHTML = cases.map(caseData => renderCaseCard(caseData, reviewStatus)).join('');
       } catch (err) {
         container.innerHTML = emptyState('Unable to load cases', err.message);
       }
     }
 
-    async function fetchMyApplications() {
-      const container = document.getElementById('my-applications-list');
-      container.innerHTML = '<div class="loading-state">Loading applications...</div>';
-
-      try {
-        const res = await fetch(`${API_BASE}/my-applications/${encodeURIComponent(dashboardUser.id || '')}`);
-        if (!res.ok) throw new Error('Failed to fetch applications');
-        currentApplications = await res.json();
-
-        document.getElementById('stat-apps').textContent = currentApplications.length;
-        document.getElementById('stat-accepted').textContent = currentApplications.filter(app => app.status === 'accepted').length;
-
-        if (!currentApplications.length) {
-          container.innerHTML = emptyState('No applications yet', 'Apply for a matched case to start tracking it here.');
-          return;
-        }
-
-        container.innerHTML = currentApplications.map(renderApplicationCard).join('');
-      } catch (err) {
-        container.innerHTML = emptyState('Unable to load applications', err.message);
-      }
-    }
-
-    function renderCaseCard(caseData) {
+    function renderCaseCard(caseData, reviewStatus) {
       const id = caseData.id || caseData._id;
-      const alreadyApplied = Boolean(caseData.applicationStatus);
-      const button = alreadyApplied
-        ? `<button class="btn-ghost btn-sm" type="button" disabled>${caseData.applicationStatus === 'accepted' ? 'Accepted' : 'Applied'}</button>`
-        : `<button class="btn-primary btn-sm" type="button" id="btn-apply-${escAttr(id)}" onclick="applyForCase('${escAttr(id)}')">Apply for Case</button>`;
+      const statusClass = (caseData.reviewStatus || 'draft').toLowerCase().replace('_', '_');
+      const statusText = formatStatus(caseData.reviewStatus || 'draft');
+
+      let actions = '';
+
+      if (reviewStatus === 'open') {
+        const alreadyApplied = Boolean(caseData.applicationStatus);
+        actions = alreadyApplied
+          ? `<button class="btn-ghost btn-sm" type="button" disabled>${caseData.applicationStatus === 'accepted' ? 'Accepted' : 'Applied'}</button>`
+          : `<button class="btn-primary btn-sm" type="button" id="btn-apply-${escAttr(id)}" onclick="applyForCase('${escAttr(id)}')">Apply for Case</button>`;
+      } else if (reviewStatus === 'under_review') {
+        actions = `
+          <button class="btn-primary btn-sm" type="button" onclick="reviewCase('${escAttr(id)}')">Review Document</button>
+          <button class="btn-ghost btn-sm" type="button" onclick="addNotes('${escAttr(id)}')">Add Notes</button>
+        `;
+      } else if (reviewStatus === 'verified') {
+        actions = `
+          <button class="btn-primary btn-sm" type="button" onclick="uploadStamped('${escAttr(id)}')">Upload Stamped</button>
+        `;
+      } else if (reviewStatus === 'completed') {
+        actions = `
+          <button class="btn-ghost btn-sm" type="button" onclick="viewFinal('${escAttr(id)}')">View Final</button>
+        `;
+      }
 
       return `
         <article class="case-card">
           <div class="case-top">
             <div class="case-type">${esc(caseData.problemType || 'General')}</div>
-            <span class="status-badge">${formatStatus(caseData.status)}</span>
+            <span class="status-badge ${statusClass}">${statusText}</span>
           </div>
           <div class="case-summary">${esc(caseData.summary || 'No summary provided.')}</div>
           <div class="meta-row">
@@ -405,7 +463,7 @@
             <span class="meta-chip">Language: ${esc(caseData.language || 'Any')}</span>
             <span class="meta-chip">Created: ${formatDate(caseData.createdAt)}</span>
           </div>
-          <div class="case-actions">${button}</div>
+          <div class="case-actions">${actions}</div>
         </article>
       `;
     }
@@ -433,6 +491,26 @@
           </div>
         </article>
       `;
+    }
+
+    async function reviewCase(caseId) {
+      // Placeholder for review functionality
+      showToast('Review functionality coming soon', '!');
+    }
+
+    async function addNotes(caseId) {
+      // Placeholder for adding notes
+      showToast('Add notes functionality coming soon', '!');
+    }
+
+    async function uploadStamped(caseId) {
+      // Placeholder for uploading stamped document
+      showToast('Upload stamped document functionality coming soon', '!');
+    }
+
+    async function viewFinal(caseId) {
+      // Placeholder for viewing final document
+      showToast('View final document functionality coming soon', '!');
     }
 
     async function applyForCase(caseId) {
@@ -496,7 +574,18 @@
     }
 
     function formatStatus(status) {
-      return String(status || '').replace(/_/g, ' ');
+      const statusMap = {
+        'draft': 'Draft',
+        'pending_review': 'Pending Review',
+        'under_review': 'Under Review',
+        'verified': 'Verified',
+        'completed': 'Completed',
+        'open': 'Open',
+        'assigned': 'Assigned',
+        'approved': 'Approved',
+        'paid': 'Paid'
+      };
+      return statusMap[String(status || '').toLowerCase()] || String(status || '').replace(/_/g, ' ');
     }
 
     function formatDate(value) {
