@@ -352,6 +352,53 @@
       margin-top: 54px;
     }
 
+    .concerned-section {
+      padding: 72px 0 40px;
+      background: rgba(255, 255, 255, .03);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .concerned-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 40px;
+      background: var(--bg);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: calc(var(--r) * 1.2);
+      box-shadow: var(--shadow);
+    }
+
+    .concerned-copy {
+      max-width: 620px;
+    }
+
+    .concerned-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .concerned-copy .eyebrow {
+      margin-bottom: 16px;
+      color: var(--accent);
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    .concerned-copy .sh2 {
+      margin-bottom: 16px;
+      max-width: 560px;
+    }
+
+    .concerned-copy .sub {
+      color: var(--ts);
+      max-width: 560px;
+    }
+
     .why-card {
       background: var(--bg);
       border: 1px solid var(--border);
@@ -505,6 +552,15 @@
         grid-template-columns: 1fr;
       }
       
+      .concerned-card {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .concerned-actions {
+        justify-content: flex-start;
+      }
+
       .cta-actions {
         flex-direction: column !important;
         align-items: stretch !important;
@@ -690,6 +746,24 @@
       </div>
     </section>
 
+    <!-- CONCERNED PERSONS -->
+    <section class="concerned-section">
+      <div class="container">
+        <div class="concerned-card">
+          <div class="concerned-copy">
+            <div class="eyebrow">For Concerned Persons</div>
+            <h2 class="sh2">Need legal help? Submit your case here.</h2>
+            <p class="sub">This section is for people seeking help with a legal problem — not for lawyers joining the platform.
+              Submit your case, request verified review, and get matched with the right advocate.</p>
+          </div>
+          <div class="concerned-actions">
+            <a href="pages/join-lawyer.html" class="btn-primary">Submit Your Case</a>
+            <a href="pages/lawyers.html" class="btn-ghost">Join as a Lawyer</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA -->
     <section class="cta-section">
       <div class="cta-glow"></div>
@@ -703,7 +777,7 @@
             data-i18n="cta_button">Start for Free →</a>
           <a href="pages/students.html" class="btn-ghost" style="font-size:15px;padding:14px 32px"
             data-i18n="feat_students_action">Join as Student</a>
-          <a href="pages/join-lawyer.html" class="btn-ghost" style="font-size:15px;padding:14px 32px">Join as a Lawyer</a>
+          <a href="pages/lawyers.html" class="btn-ghost" style="font-size:15px;padding:14px 32px">Join as a Lawyer</a>
         </div>
         <p class="cta-note" data-i18n="cta_note">No credit card required &nbsp;·&nbsp; Hindi & English &nbsp;·&nbsp;
           12,400+ queries resolved</p>

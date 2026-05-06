@@ -30,7 +30,11 @@ app.use(apiLimiter);
 
 
 // 🔑 PUT YOUR API KEY HERE (⚠️ don’t share publicly)
-const GROQ_API_KEY = process.env.GROQ_API_KEY;
+const GROQ_API_KEY = process.env.GROQ_API_KEY || "YOUR_GROQ_API_KEY_HERE";
+
+if (!GROQ_API_KEY || GROQ_API_KEY === "YOUR_GROQ_API_KEY_HERE") {
+  console.error("❌ GROQ_API_KEY not set! Please set it in .env file.");
+}
 
 function publicUser(user) {
   return {
@@ -92,19 +96,80 @@ function getFallbackLawyers() {
   }
 }
 
+async function resolveLawyerTarget(lawyerId) {
+  if (!lawyerId) return null;
+
+  if (isValidObjectId(lawyerId)) {
+    const user = await User.findById(lawyerId);
+    if (user) return user;
+  }
+
+  const fallback = getFallbackLawyers().find(lawyer => String(lawyer.id) === String(lawyerId));
+  if (fallback) {
+    return { ...fallback, role: 'lawyer', id: String(fallback.id) };
+  }
+
+  return null;
+}
+
 function mapLawyerForList(lawyer) {
   const profile = lawyer.profile || {};
   const languages = normalizeList(profile.languages || profile.language || lawyer.languages);
+  const tags = normalizeList(profile.tags || profile.specializations || profile.keywords || lawyer.keywords || []);
+  const fee = Number(profile.l_fee || profile.fee || profile.consultationFee || 1800) || 1800;
+  const rating = Number(profile.rating || profile.l_rating || profile.ratingScore || 4.8) || 4.8;
+  const verified = profile.verified !== false;
+  const summary = String(profile.bio || profile.description || profile.about || lawyer.bio || lawyer.description || "Trusted lawyer with strong experience in handling important client matters.").trim();
+
   return {
     id: String(lawyer._id || lawyer.id),
     name: lawyer.name || "Unknown Lawyer",
-    specialization: profile.l_spec || lawyer.specialization || "General",
-    experience: profile.l_exp ? profile.l_exp + " Years" : lawyer.experience || "Unknown",
-    location: profile.l_loc || lawyer.location || "Unknown",
-    phone: profile.phone || lawyer.phone || "Unknown",
+    initials: (lawyer.name || "U").split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase(),
+    specialization: profile.l_spec || lawyer.specialization || tags[0] || "General",
+    experience: profile.l_exp ? `${profile.l_exp} Years` : lawyer.experience || "8 Years",
+    location: profile.l_loc || profile.location || profile.city || "India",
+    fee,
+    rating,
+    verified,
+    tags,
+    summary,
     languages,
-    keywords: lawyer.keywords || []
+    keywords: normalizeList(profile.keywords || lawyer.keywords)
   };
+}
+
+function parseBudgetFilter(value) {
+  if (!value || value === 'Any' || value === 'All') return {};
+  const cleaned = String(value).replace(/[₹,\s]/g, '');
+  if (cleaned.includes('-')) {
+    const [min, max] = cleaned.split('-').map(n => Number(n.replace(/[^0-9]/g, '') || 0));
+    return { min, max };
+  }
+  if (cleaned.startsWith('Under')) return { max: Number(cleaned.replace(/[^0-9]/g, '')) };
+  if (cleaned.startsWith('Above')) return { min: Number(cleaned.replace(/[^0-9]/g, '')) };
+  const num = Number(cleaned.replace(/[^0-9]/g, ''));
+  return Number.isFinite(num) ? { min: num } : {};
+}
+
+function applyLawyerFilters(lawyers, specialization, location, budget) {
+  const budgetRange = parseBudgetFilter(budget);
+  return lawyers.filter(lawyer => {
+    const specFilter = String(specialization || '').trim().toLowerCase();
+    const locationFilter = String(location || '').trim().toLowerCase();
+    const fee = Number(lawyer.fee) || 0;
+    if (specFilter && specFilter !== 'all') {
+      const spec = String(lawyer.specialization || '').toLowerCase();
+      const tags = (lawyer.tags || []).map(tag => String(tag || '').toLowerCase());
+      if (!spec.includes(specFilter) && !tags.some(tag => tag.includes(specFilter))) return false;
+    }
+    if (locationFilter && locationFilter !== 'all') {
+      const loc = String(lawyer.location || '').toLowerCase();
+      if (!loc.includes(locationFilter) && !String(lawyer.tags || []).toLowerCase().includes(locationFilter)) return false;
+    }
+    if (budgetRange.min && fee < budgetRange.min) return false;
+    if (budgetRange.max && fee > budgetRange.max) return false;
+    return true;
+  });
 }
 
 function matchLawyersForCase(lawyers, caseData) {
@@ -262,7 +327,7 @@ app.post("/login", async (req, res) => {
 app.post("/chat", async (req, res) => {
   const { message, system } = req.body;
 
-  const systemPrompt = system || "You are a legal assistant for Indian law. Answer clearly, professionally, and politely.";
+  const systemPrompt = system || `You are NyaySetu AI, a professional legal assistant for Indian law. Provide accurate, ethical, and comprehensive legal information. Always include appropriate disclaimers that you are not a substitute for qualified legal counsel. Structure responses clearly with legal analysis, applicable laws, recommended actions, and important considerations.`;
 
   try {
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -693,11 +758,95 @@ app.get("/case-details/:caseId", async (req, res) => {
 app.get("/get-lawyers", async (req, res) => {
   try {
     const lawyers = await User.find({ role: "lawyer" }).limit(6).select('name email profile');
-
     const mapped = lawyers.map(mapLawyerForList);
-    res.json(mapped.length ? mapped : getFallbackLawyers());
+    const filtered = applyLawyerFilters(mapped, req.query.specialization, req.query.location, req.query.budget);
+    res.json(filtered.length ? filtered : (mapped.length ? mapped : getFallbackLawyers()));
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch lawyers." });
+  }
+});
+
+app.get("/lawyers", async (req, res) => {
+  try {
+    const lawyers = await User.find({ role: "lawyer" }).select('name email profile');
+    const mapped = lawyers.map(mapLawyerForList);
+    const filtered = applyLawyerFilters(mapped, req.query.specialization, req.query.location, req.query.budget);
+    res.json(filtered.length ? filtered : (mapped.length ? mapped : getFallbackLawyers()));
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch lawyers." });
+  }
+});
+
+app.post("/send-case", async (req, res) => {
+  try {
+    const { caseId, lawyerId } = req.body || {};
+    if (!isValidObjectId(caseId) || !lawyerId) {
+      return res.status(400).json({ error: "Invalid caseId or lawyerId." });
+    }
+
+    const lawyer = await resolveLawyerTarget(lawyerId);
+    if (!lawyer || lawyer.role !== "lawyer") {
+      return res.status(404).json({ error: "Selected lawyer was not found." });
+    }
+
+    const caseData = await updateCaseStatus(caseId, "pending_review", {
+      reviewRequestedAt: new Date()
+    });
+
+    let application = await Application.findOne({ caseId, lawyerId });
+    if (!application) {
+      application = await Application.create({ caseId, lawyerId, status: "pending" });
+    }
+
+    res.json({
+      case: serializeCase(caseData),
+      application: {
+        id: application.id,
+        caseId: application.caseId,
+        lawyerId: application.lawyerId,
+        status: application.status,
+        createdAt: application.createdAt
+      }
+    });
+  } catch (err) {
+    res.status(err.status || 500).json({ error: err.message || "Failed to send case." });
+  }
+});
+
+app.post("/book-consultation", async (req, res) => {
+  try {
+    const { caseId, lawyerId } = req.body || {};
+    if (!isValidObjectId(caseId) || !lawyerId) {
+      return res.status(400).json({ error: "Invalid caseId or lawyerId." });
+    }
+
+    const lawyer = await resolveLawyerTarget(lawyerId);
+    if (!lawyer || lawyer.role !== "lawyer") {
+      return res.status(404).json({ error: "Selected lawyer was not found." });
+    }
+
+    const caseData = await updateCaseStatus(caseId, "pending_review", {
+      reviewRequestedAt: new Date()
+    });
+
+    let application = await Application.findOne({ caseId, lawyerId });
+    if (!application) {
+      application = await Application.create({ caseId, lawyerId, status: "pending" });
+    }
+
+    res.json({
+      case: serializeCase(caseData),
+      application: {
+        id: application.id,
+        caseId: application.caseId,
+        lawyerId: application.lawyerId,
+        status: application.status,
+        createdAt: application.createdAt,
+        type: 'consultation'
+      }
+    });
+  } catch (err) {
+    res.status(err.status || 500).json({ error: err.message || "Failed to book consultation." });
   }
 });
 

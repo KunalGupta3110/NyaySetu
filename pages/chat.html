@@ -658,6 +658,194 @@
         padding: 12px 16px;
       }
     }
+
+      .lawyer-cta-card {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 20px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 28px 80px rgba(0,0,0,0.12);
+        border-radius: 24px;
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .lawyer-cta-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(250,216,120,0.4);
+        box-shadow: 0 32px 90px rgba(0,0,0,0.18);
+      }
+      .lawyer-cta-content {
+        min-width: 0;
+        flex: 1;
+      }
+      .lawyer-cta-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--tp);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .lawyer-cta-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+        background: rgba(250,216,120,0.18);
+        color: #F7E3A7;
+      }
+      .lawyer-cta-subtitle {
+        margin-top: 8px;
+        color: var(--ts);
+        font-size: 13px;
+      }
+
+      .lawyer-modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        background: rgba(5, 8, 18, 0.82);
+        backdrop-filter: blur(18px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease;
+      }
+      .lawyer-modal-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .lawyer-modal {
+        width: min(1100px, 100%);
+        max-height: calc(100vh - 48px);
+        background: rgba(10, 12, 24, 0.98);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 28px;
+        box-shadow: 0 40px 120px rgba(0,0,0,0.35);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .lawyer-modal-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: flex-start;
+        padding: 28px 32px 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+      .lawyer-modal-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--tp);
+        margin-bottom: 6px;
+      }
+      .lawyer-modal-copy {
+        color: var(--ts);
+        line-height: 1.6;
+        max-width: 700px;
+      }
+      .lawyer-modal-close {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.1);
+        color: var(--tp);
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        font-size: 18px;
+        cursor: pointer;
+      }
+      .lawyer-modal-filters {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(180px, 1fr));
+        gap: 16px;
+        padding: 20px 32px;
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+      .lawyer-filter { display: flex; flex-direction: column; gap: 8px; }
+      .lawyer-filter label { font-size: 12px; font-weight: 600; color: var(--ts); }
+      .lawyer-filter select {
+        width: 100%;
+        min-height: 46px;
+        border-radius: 14px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: var(--tp);
+        padding: 0 14px;
+        font-size: 14px;
+      }
+      .lawyer-modal-body {
+        overflow-y: auto;
+        padding: 24px 32px 32px;
+      }
+      .lawyer-modal-summary {
+        margin-bottom: 24px;
+        display: grid;
+        gap: 8px;
+      }
+      .lawyer-summary-label { color: var(--ts); font-size: 13px; }
+      .lawyer-summary-text { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 18px; padding: 18px; color: var(--tp); line-height: 1.8; font-size: 14px; }
+      .lawyer-modal-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+      .lawyer-match-count { color: var(--tp); font-weight: 600; }
+      .lawyer-card-list { display: grid; gap: 18px; }
+      .lawyer-card {
+        display: grid;
+        grid-template-columns: 76px minmax(0, 1fr) 200px;
+        gap: 18px;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: 24px;
+        padding: 22px;
+        align-items: start;
+      }
+      .lawyer-card-left { display: flex; flex-direction: column; gap: 16px; }
+      .lawyer-avatar { width: 68px; height: 68px; border-radius: 22px; background: linear-gradient(135deg, rgba(255,217,110,0.95), rgba(250,171,54,0.85)); color: #0A0A0A; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 22px; }
+      .lawyer-info { display: grid; gap: 10px; }
+      .lawyer-name { font-size: 16px; font-weight: 700; color: var(--tp); }
+      .lawyer-subtitle { font-size: 13px; color: var(--ts); }
+      .lawyer-meta-row { display: flex; flex-wrap: wrap; gap: 6px; color: var(--ts); font-size: 12px; }
+      .lawyer-card-middle { display: flex; flex-direction: column; gap: 12px; }
+      .lawyer-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+      .lawyer-tag { padding: 6px 10px; border-radius: 999px; font-size: 12px; background: rgba(255,255,255,0.05); color: var(--ts); border: 1px solid rgba(255,255,255,0.08); }
+      .lawyer-summary { color: var(--ts); font-size: 13px; line-height: 1.75; }
+      .lawyer-card-right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+      .lawyer-fee { font-size: 20px; font-weight: 700; color: var(--tp); }
+      .lawyer-rating { font-size: 13px; color: var(--accent); font-weight: 700; }
+      .lawyer-actions { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+      .lawyer-card-right .btn { width: 100%; }
+      .lawyer-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; font-size: 12px; color: #D2FFD2; background: rgba(29,120,77,0.18); border: 1px solid rgba(64,200,123,0.2); }
+      .lawyer-empty-state { color: var(--ts); padding: 24px 20px; border: 1px dashed rgba(255,255,255,0.12); border-radius: 18px; text-align: center; }
+      .lawyer-loader { color: var(--tp); text-align: center; padding: 40px 0; }
+
+      @media(max-width:880px) {
+        .lawyer-modal { max-height: calc(100vh - 24px); }
+        .lawyer-modal-filters { grid-template-columns: 1fr; }
+        .lawyer-card { grid-template-columns: 1fr; }
+        .lawyer-card-right { align-items: stretch; }
+        .lawyer-modal-header { flex-direction: column; align-items: stretch; }
+      }
+
+      @media(max-width:640px) {
+        .lawyer-cta-card { flex-direction: column; align-items: stretch; }
+        .lawyer-cta-action { width: 100%; }
+        .lawyer-filter select { min-height: 44px; }
+      }
   </style>
 </head>
 
@@ -795,6 +983,66 @@
           </div>
         </div>
       </main>
+    </div>
+  </div>
+
+  <div class="lawyer-modal-overlay" id="lawyer-modal-overlay" onclick="if (event.target === this) closeLawyerModal()">
+    <div class="lawyer-modal" role="dialog" aria-modal="true" aria-labelledby="lawyer-modal-title">
+      <div class="lawyer-modal-header">
+        <div>
+          <div class="modal-eyebrow">Connect with a Lawyer</div>
+          <div class="lawyer-modal-title" id="lawyer-modal-title">Premium lawyers matched to your case</div>
+          <div class="lawyer-modal-copy">Review case details and choose verified counsel who can review your summary and advise next steps.</div>
+        </div>
+        <button class="lawyer-modal-close" onclick="closeLawyerModal()" aria-label="Close modal">✕</button>
+      </div>
+      <div class="lawyer-modal-filters">
+        <div class="lawyer-filter">
+          <label for="lawyer-filter-type">Case Type</label>
+          <select id="lawyer-filter-type" onchange="updateLawyerFilters('caseType', this.value)">
+            <option>All</option>
+            <option>Criminal</option>
+            <option>Family</option>
+            <option>Property</option>
+            <option>Consumer</option>
+            <option>Cybercrime</option>
+            <option>General</option>
+          </select>
+        </div>
+        <div class="lawyer-filter">
+          <label for="lawyer-filter-budget">Budget</label>
+          <select id="lawyer-filter-budget" onchange="updateLawyerFilters('budget', this.value)">
+            <option>Any</option>
+            <option>Under ₹1500</option>
+            <option>₹1500 - ₹2500</option>
+            <option>Above ₹2500</option>
+          </select>
+        </div>
+        <div class="lawyer-filter">
+          <label for="lawyer-filter-location">Location</label>
+          <select id="lawyer-filter-location" onchange="updateLawyerFilters('location', this.value)">
+            <option>All</option>
+            <option>Delhi</option>
+            <option>Bangalore</option>
+            <option>Mumbai</option>
+            <option>Chennai</option>
+            <option>Hyderabad</option>
+            <option>Online</option>
+          </select>
+        </div>
+      </div>
+      <div class="lawyer-modal-body" id="lawyer-modal-body">
+        <div class="lawyer-modal-summary">
+          <div class="lawyer-summary-label">Case type</div>
+          <div class="lawyer-summary-text" id="lawyer-modal-case-type">General</div>
+          <div class="lawyer-summary-label">Case summary</div>
+          <div class="lawyer-summary-text" id="lawyer-modal-case-summary">Your case details will appear here once lawyers are loaded.</div>
+        </div>
+        <div class="lawyer-modal-toolbar">
+          <div class="lawyer-match-count" id="lawyer-match-count">Matching lawyers...</div>
+        </div>
+        <div class="lawyer-card-list" id="lawyer-card-list"></div>
+      </div>
     </div>
   </div>
 
@@ -950,10 +1198,14 @@ Rules:
         window.lastAiReply = reply;
 
         msgs.insertAdjacentHTML('beforeend', `
-      <div class="msg-row a" id="lawyer-prompt-${mid}" style="margin-top:-10px;">
-        <button class="pill" onclick="findLawyer('${mid}')" style="background:var(--accent); color:#0A0A0A; border:none; margin-left: 48px; display:inline-flex; align-items:center; gap:6px;">
-          👨‍⚖️ Need a lawyer? Your case is ready.
-        </button>
+      <div class="msg-row a" id="lawyer-prompt-${mid}" style="margin-top:-12px;">
+        <div class="lawyer-cta-card">
+          <div class="lawyer-cta-content">
+            <div class="lawyer-cta-title">👩‍⚖️ Need a lawyer? Your case is ready. <span class="lawyer-cta-pill">Premium match</span></div>
+            <div class="lawyer-cta-subtitle">Get your document reviewed by verified lawyers.</div>
+          </div>
+          <button class="btn btn-primary btn-sm lawyer-cta-action" onclick="findLawyer('${mid}')">Find Lawyers →</button>
+        </div>
       </div>
     `);
         scrollDown();
@@ -984,51 +1236,236 @@ Rules:
     }
 
     // ── LAWYER CONNECTIVITY ──
-    window.findLawyer = async function (mid) {
-      const btnDiv = document.getElementById('lawyer-prompt-' + mid);
-      if (btnDiv) btnDiv.style.display = 'none';
+    const lawyerModalState = {
+      activeCase: null,
+      lawyers: [],
+      filters: { caseType: 'All', budget: 'Any', location: 'All' }
+    };
 
-      const msgs = document.getElementById('messages');
-      const loadId = 'lawyer-load-' + Date.now();
-      msgs.insertAdjacentHTML('beforeend', `
-    <div class="msg-row a" id="${loadId}">
-      <div class="msg-bubble" style="background:var(--bg1);">
-        <div class="typing"><span></span><span></span><span></span></div>
-      </div>
-    </div>`);
-      scrollDown();
+    function isValidObjectId(id) {
+      return /^[0-9a-fA-F]{24}$/.test(String(id || '').trim());
+    }
 
+    function detectProblemType(userText = '', aiReply = '') {
+      const combined = `${userText} ${aiReply}`.toLowerCase();
+      if (/\b(fir|arrest|police|crpc|bail|murder|theft|robbery|assault|dowry|cheating)\b/.test(combined)) {
+        if (combined.includes('cyber') || combined.includes('data breach') || combined.includes('online fraud')) return 'Cybercrime';
+        return 'Criminal';
+      }
+      if (/\b(divorce|custody|maintenance|498a|marriage|dowry|domestic violence|separation)\b/.test(combined)) return 'Family';
+      if (/\b(rent|landlord|tenant|security deposit|eviction|possession|lease|flat|house|property)\b/.test(combined)) return 'Property';
+      if (/\b(consumer|refund|defective|service|complaint|trademark|advertising|sale)\b/.test(combined)) return 'Consumer';
+      if (/\b(cyber|hacking|phishing|ransomware|identity theft|online fraud|it act)\b/.test(combined)) return 'Cybercrime';
+      return 'General';
+    }
+
+    function buildCaseContext() {
+      const userText = window.lastUserText || 'Legal inquiry';
+      const aiReply = window.lastAiReply || 'Case details';
+      const problemType = detectProblemType(userText, aiReply);
+      const summary = aiReply.trim().substring(0, 650);
+      const facts = [userText.trim()];
+      const documents = [summary];
+      const user = getStoredUser();
+      return {
+        userId: user && isValidObjectId(user.id) ? user.id : undefined,
+        problemType,
+        summary,
+        facts,
+        documents,
+        userText,
+        aiReply
+      };
+    }
+
+    async function createCaseIfNeeded() {
+      const context = buildCaseContext();
+      if (window.currentCaseContext
+        && window.currentCaseContext.userText === context.userText
+        && window.currentCaseContext.aiReply === context.aiReply
+        && window.currentCaseContext.caseId) {
+        return window.currentCaseContext;
+      }
+
+      const res = await fetch(`${API_BASE_URL}/create-case`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: context.userId,
+          problemType: context.problemType,
+          summary: context.summary,
+          facts: context.facts,
+          documents: context.documents
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to create case.');
+      window.currentCaseContext = { ...context, caseId: data.id };
+      return window.currentCaseContext;
+    }
+
+    async function fetchMatchedLawyers(caseId) {
+      const res = await fetch(`${API_BASE_URL}/match-lawyers/${caseId}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Unable to fetch lawyer matches.');
+      return data;
+    }
+
+    function openLawyerModal() {
+      const overlay = document.getElementById('lawyer-modal-overlay');
+      if (!overlay) return;
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLawyerModal() {
+      const overlay = document.getElementById('lawyer-modal-overlay');
+      if (!overlay) return;
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function updateLawyerFilters(filter, value) {
+      lawyerModalState.filters[filter] = value;
+      renderLawyerCards();
+    }
+
+    function filterLawyers(lawyer) {
+      const { caseType, budget, location } = lawyerModalState.filters;
+      const matchesType = caseType === 'All' || lawyer.specialization.toLowerCase().includes(caseType.toLowerCase());
+      const matchesLocation = location === 'All' || lawyer.location.toLowerCase().includes(location.toLowerCase());
+      let matchesBudget = true;
+      const fee = Number(lawyer.fee) || 0;
+      if (budget === 'Under ₹1500') matchesBudget = fee <= 1500;
+      else if (budget === '₹1500 - ₹2500') matchesBudget = fee >= 1500 && fee <= 2500;
+      else if (budget === 'Above ₹2500') matchesBudget = fee > 2500;
+      return matchesType && matchesLocation && matchesBudget;
+    }
+
+    function renderLawyerCards() {
+      const container = document.getElementById('lawyer-card-list');
+      const count = document.getElementById('lawyer-match-count');
+      if (!container || !count) return;
+      const display = lawyerModalState.lawyers.filter(filterLawyers);
+      count.textContent = `${display.length} lawyers matched`; 
+      if (!display.length) {
+        container.innerHTML = `<div class="lawyer-empty-state">No lawyers matched your filters. Try a broader search or adjust budget/location.</div>`;
+        return;
+      }
+      container.innerHTML = display.map(lawyer => {
+        const verifiedBadge = lawyer.verified ? '<span class="lawyer-badge verified">Verified</span>' : '<span class="lawyer-badge">Verified soon</span>';
+        return `
+          <div class="lawyer-card">
+            <div class="lawyer-card-left">
+              <div class="lawyer-avatar">${lawyer.initials}</div>
+              <div class="lawyer-info">
+                <div class="lawyer-name">${lawyer.name}</div>
+                <div class="lawyer-subtitle">${lawyer.specialization}</div>
+                <div class="lawyer-meta-row">
+                  <span>${lawyer.experience}</span>
+                  <span>•</span>
+                  <span>${lawyer.location}</span>
+                </div>
+              </div>
+            </div>
+            <div class="lawyer-card-middle">
+              <div class="lawyer-tags">${(lawyer.tags || []).slice(0, 3).map(tag => `<span class="lawyer-tag">${tag}</span>`).join('')}</div>
+              <div class="lawyer-summary">${lawyer.summary}</div>
+            </div>
+            <div class="lawyer-card-right">
+              <div class="lawyer-fee">₹${lawyer.fee.toLocaleString()}</div>
+              <div class="lawyer-rating">⭐ ${lawyer.rating.toFixed(1)}</div>
+              <div class="lawyer-actions">
+                <button class="btn btn-primary btn-sm" onclick="sendCaseToLawyer('${lawyer.id}', this)">Send Case</button>
+                <button class="btn btn-ghost btn-sm" onclick="bookConsultation('${lawyer.id}', this)">Book Consultation</button>
+              </div>
+              ${verifiedBadge}
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function renderLawyerModalHeader() {
+      const caseTypeLabel = document.getElementById('lawyer-modal-case-type');
+      const caseSummaryLabel = document.getElementById('lawyer-modal-case-summary');
+      const filters = document.getElementById('lawyer-filter-type');
+      if (caseTypeLabel) caseTypeLabel.textContent = lawyerModalState.activeCase.problemType || 'General';
+      if (caseSummaryLabel) caseSummaryLabel.textContent = lawyerModalState.activeCase.summary || '';
+      if (filters) filters.value = lawyerModalState.activeCase.problemType || 'All';
+    }
+
+    async function loadLawyerModalForCase(caseId) {
+      const body = document.getElementById('lawyer-modal-body');
+      const count = document.getElementById('lawyer-match-count');
+      if (body) body.innerHTML = '<div class="lawyer-loader">Finding the best lawyers for your case…</div>';
+      if (count) count.textContent = 'Matching lawyers...';
+
+      const data = await fetchMatchedLawyers(caseId);
+      lawyerModalState.activeCase = data.case;
+      lawyerModalState.lawyers = (data.lawyers || []).map(lawyer => ({ ...lawyer, initials: lawyer.initials || (lawyer.name || 'U').split(' ').map(w => w[0]).slice(0,2).join('').toUpperCase() }));
+      lawyerModalState.filters.caseType = data.case.problemType || 'All';
+      document.getElementById('lawyer-filter-type').value = lawyerModalState.filters.caseType;
+      renderLawyerModalHeader();
+      renderLawyerCards();
+    }
+
+    async function submitLawyerRequest(lawyerId, button, endpoint, successMessage, defaultText) {
+      if (!window.currentCaseContext?.caseId) {
+        showToast('Please create a case first.', '⚠');
+        return;
+      }
+      button.disabled = true;
+      const originalText = button.textContent;
+      button.textContent = 'Processing...';
       try {
-        const userText = window.lastUserText || "Legal inquiry";
-        const summaryText = window.lastAiReply || "Case details";
-        const user = getStoredUser();
-        const userId = user ? user.id : 'anonymous';
-
-        let problemType = "General";
-        if (userText.toLowerCase().includes("rent") || userText.toLowerCase().includes("tenant")) problemType = "rent dispute";
-        else if (userText.toLowerCase().includes("consumer") || userText.toLowerCase().includes("product")) problemType = "consumer complaint";
-
-        const caseRes = await fetch((typeof API_BASE_URL !== 'undefined' ? API_BASE_URL : '') + '/create-case', {
+        const res = await fetch(`${API_BASE_URL}${endpoint}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            userId, problemType,
-            summary: summaryText.substring(0, 500) + (summaryText.length > 500 ? "..." : ""),
-            facts: [userText], documents: []
-          })
+          body: JSON.stringify({ caseId: window.currentCaseContext.caseId, lawyerId })
         });
-        const caseData = await caseRes.json();
-
-        window.location.href = 'lawyers.html?caseId=' + caseData.id;
-        
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Request failed.');
+        showToast(successMessage);
+        button.textContent = 'Done';
+        button.classList.remove('btn-ghost');
+        button.classList.add('btn-primary');
+        closeLawyerModal();
+        return data;
       } catch (err) {
-        document.getElementById(loadId)?.remove();
         console.error(err);
-        msgs.insertAdjacentHTML('beforeend', `
-      <div class="msg-row a">
-        <div class="msg-bubble" style="background:var(--bg1); color:var(--red);">Failed to connect. Please try again later.</div>
-      </div>`);
-        scrollDown();
+        button.disabled = false;
+        button.textContent = defaultText || originalText;
+        showToast(err.message || 'Unable to submit request', '⚠');
+      }
+    }
+
+    async function sendCaseToLawyer(lawyerId, button) {
+      await submitLawyerRequest(lawyerId, button, '/send-case', 'Case sent successfully to lawyer', 'Send Case');
+    }
+
+    async function bookConsultation(lawyerId, button) {
+      await submitLawyerRequest(lawyerId, button, '/book-consultation', 'Consultation request sent to lawyer', 'Book Consultation');
+    }
+
+    window.findLawyer = async function (mid) {
+      const btn = document.querySelector(`#lawyer-prompt-${mid} .lawyer-cta-action`);
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Finding lawyers...';
+      }
+
+      try {
+        const context = await createCaseIfNeeded();
+        await loadLawyerModalForCase(context.caseId);
+        openLawyerModal();
+      } catch (err) {
+        console.error(err);
+        showToast(err.message || 'Failed to connect. Please try again later.', '⚠');
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'Find Lawyers →';
+        }
       }
     };
 

@@ -113,12 +113,12 @@ app.post("/create-case", async (req, res) => {
   try {
     const { problemType, summary, facts = [], documents = [], userId } = req.body || {};
     
-    if (!userId || !problemType || !summary) {
+    if (!problemType || !summary) {
       return res.status(400).json({ error: "Missing required case fields." });
     }
 
     const newCase = await Case.create({
-      userId,
+      userId: userId && mongoose.Types.ObjectId.isValid(userId) ? userId : undefined,
       problemType,
       summary,
       facts,
@@ -127,7 +127,7 @@ app.post("/create-case", async (req, res) => {
       assignedLawyerId: null
     });
     
-    res.status(201).json(newCase);
+    res.status(201).json({ id: newCase._id.toString(), ...newCase.toObject() });
   } catch (err) {
     res.status(500).json({ error: "Failed to create case." });
   }

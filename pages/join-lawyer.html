@@ -1,257 +1,1174 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Join as a Lawyer — NyaySetu</title>
-<link rel="stylesheet" href="../css/base.css">
-<style>
-/* ── PAGE HERO ── */
-.page-hero { padding: 52px 0 32px; border-bottom: 1px solid var(--border); }
-
-/* ── CONTENT ── */
-.content-area { padding: 56px 0 80px; }
-
-/* ── SIGNUP ── */
-.signup-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: start; }
-.benefit-list { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
-.benefit { display: flex; align-items: flex-start; gap: 14px; }
-.benefit-ico { width: 36px; height: 36px; border-radius: 9px; background: var(--adim); border: 1px solid rgba(201,169,110,.15); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; margin-top: 2px; }
-.benefit-title { font-size: 14px; font-weight: 600; color: var(--tp); margin-bottom: 3px; }
-.benefit-desc  { font-size: 13px; color: var(--ts); line-height: 1.6; }
-
-.signup-form-card { background: var(--bg1); border: 1px solid var(--border); border-radius: var(--rl); padding: 32px; }
-.signup-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--tp); margin-bottom: 6px; }
-.signup-sub   { font-size: 13px; color: var(--ts); margin-bottom: 24px; }
-.terms-note   { font-size: 11.5px; color: var(--tm); margin-top: 12px; text-align: center; line-height: 1.6; }
-
-@media (max-width: 860px) {
-  .signup-grid { grid-template-columns: 1fr; }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connect with Verified Lawyers - NyaySetu</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <style>
+    html, body { overflow-x: hidden; }
+    body {
+      padding-top: 64px;
+      background: var(--bg);
+      color: var(--tp);
+    }
+    .lawyer-page {
+      width: 100%;
+      overflow-x: hidden;
+    }
+    .lawyer-wrap {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .lawyer-hero {
+      position: relative;
+      padding: 54px 0 42px;
+      border-bottom: 1px solid var(--border);
+      background:
+        linear-gradient(135deg, rgba(201,169,110,.10), transparent 38%),
+        radial-gradient(circle at 78% 12%, rgba(129,140,248,.08), transparent 30%);
+      overflow: hidden;
+    }
+    .lawyer-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      opacity: .38;
+      pointer-events: none;
+    }
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+      gap: 42px;
+      align-items: center;
+      z-index: 1;
+    }
+    .eyebrow-mini {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 6px 10px;
+      border: 1px solid rgba(201,169,110,.20);
+      border-radius: 999px;
+      background: var(--adim);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 6vw, 68px);
+      line-height: 1.04;
+      letter-spacing: -1.8px;
+      margin-bottom: 18px;
+      color: var(--tp);
+    }
+    .hero-sub {
+      max-width: 560px;
+      color: var(--ts);
+      font-size: 17px;
+      line-height: 1.75;
+      margin-bottom: 28px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .workflow-card {
+      background: rgba(17,17,17,.86);
+      border: 1px solid var(--border);
+      border-radius: var(--rl);
+      box-shadow: var(--shadowlg);
+      padding: 24px;
+      backdrop-filter: blur(16px);
+    }
+    .workflow-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .workflow-card p {
+      color: var(--ts);
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .workflow-form {
+      display: grid;
+      gap: 12px;
+    }
+    .workflow-form .form-row {
+      grid-template-columns: 1fr 1fr;
+    }
+    .workflow-progress {
+      margin-top: 22px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .progress-track {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .progress-step {
+      height: 6px;
+      border-radius: 999px;
+      background: var(--bg3);
+    }
+    .progress-step.done {
+      background: var(--accent);
+    }
+    .status-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      color: var(--ts);
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(201,169,110,.24);
+      color: var(--accent);
+      background: var(--adim);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      white-space: nowrap;
+    }
+    .section {
+      padding: 58px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-head {
+      max-width: 680px;
+      margin-bottom: 34px;
+    }
+    .section-head.center {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.12;
+      letter-spacing: -.8px;
+      margin-bottom: 10px;
+    }
+    .section-sub {
+      color: var(--ts);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .timeline-step {
+      position: relative;
+      min-height: 168px;
+      padding: 18px 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      background: var(--bg1);
+      transition: transform var(--t) var(--ease), border-color var(--t) var(--ease);
+    }
+    .timeline-step:hover {
+      transform: translateY(-3px);
+      border-color: rgba(201,169,110,.28);
+    }
+    .step-num {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--adim);
+      border: 1px solid rgba(201,169,110,.18);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .timeline-step h3 {
+      font-size: 14px;
+      color: var(--tp);
+      margin-bottom: 7px;
+    }
+    .timeline-step p {
+      font-size: 12.5px;
+      line-height: 1.6;
+      color: var(--ts);
+    }
+    .lawyer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .lawyer-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 260px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      background: var(--bg1);
+      transition: transform var(--t) var(--ease), border-color var(--t) var(--ease);
+    }
+    .lawyer-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(201,169,110,.26);
+    }
+    .lawyer-avatar {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--adim);
+      color: var(--accent);
+      border: 1px solid rgba(201,169,110,.22);
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .lawyer-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--tp);
+      margin-bottom: 7px;
+    }
+    .lawyer-meta {
+      display: grid;
+      gap: 5px;
+      margin-bottom: 16px;
+      color: var(--ts);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .rating {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .trust-card {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      background: var(--bg1);
+    }
+    .trust-card h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+    .trust-card p {
+      color: var(--ts);
+      font-size: 13.5px;
+      line-height: 1.65;
+    }
+    .muted-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 11px 18px;
+      border-radius: var(--r);
+      border: 1px solid var(--border);
+      color: var(--ts);
+      background: transparent;
+      font-weight: 600;
+      transition: all var(--t) var(--ease);
+    }
+    .muted-action:hover {
+      color: var(--tp);
+      border-color: var(--border2);
+      background: var(--bg2);
+    }
+    .case-output {
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      background: var(--bg);
+      color: var(--ts);
+      font-size: 13px;
+      line-height: 1.55;
+      margin-top: 12px;
+    }
+    .lead-section {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(201,169,110,.06), transparent 42%),
+        linear-gradient(180deg, rgba(255,255,255,.015), transparent);
+    }
+    .lead-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 54px 54px;
+      opacity: .28;
+      pointer-events: none;
+    }
+    .lead-inbox {
+      position: relative;
+      z-index: 1;
+    }
+    .lead-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 26px;
+    }
+    .lead-title-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      margin-bottom: 14px;
+    }
+    .lead-title-row h2 {
+      font-size: 19px;
+      line-height: 1.25;
+      color: var(--tp);
+    }
+    .lead-count {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: var(--adim);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .lead-sort {
+      color: var(--ts);
+      font-size: 13px;
+    }
+    .lead-copy {
+      max-width: 900px;
+      color: var(--ts);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .lead-list {
+      display: grid;
+      gap: 14px;
+    }
+    .lead-card {
+      position: relative;
+      padding: 24px;
+      border: 1px solid rgba(201,169,110,.28);
+      border-radius: var(--rl);
+      background: rgba(17,17,17,.82);
+      transition: transform var(--t) var(--ease), border-color var(--t) var(--ease), background var(--t) var(--ease);
+      outline: none;
+    }
+    .lead-card:hover,
+    .lead-card:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba(201,169,110,.48);
+      background: rgba(22,22,22,.92);
+    }
+    .lead-card.selected {
+      border-color: rgba(74,222,128,.45);
+      box-shadow: inset 0 0 0 1px rgba(74,222,128,.12);
+    }
+    .lead-card.declined {
+      opacity: .58;
+    }
+    .lead-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .lead-category,
+    .lead-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--adim);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .lead-urgency {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .lead-urgency.high { color: var(--red); }
+    .lead-urgency.low { color: var(--green); }
+    .lead-name {
+      font-size: 20px;
+      line-height: 1.3;
+      color: var(--tp);
+      margin-bottom: 12px;
+    }
+    .lead-summary {
+      color: var(--ts);
+      font-size: 15px;
+      line-height: 1.65;
+      margin-bottom: 16px;
+      max-width: 860px;
+    }
+    .lead-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .lead-chip {
+      min-height: 28px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .lead-chip.neutral {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      color: var(--ts);
+    }
+    .lead-chip.ready {
+      color: var(--green);
+      background: var(--greendim);
+      border: 1px solid rgba(74,222,128,.18);
+    }
+    .lead-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .lead-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 18px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--tp);
+      font-size: 14px;
+      font-weight: 800;
+      transition: all var(--t) var(--ease);
+    }
+    .lead-action.accept {
+      color: var(--green);
+      border-color: rgba(74,222,128,.26);
+      background: rgba(74,222,128,.10);
+    }
+    .lead-action.accept:hover {
+      background: rgba(74,222,128,.16);
+      border-color: rgba(74,222,128,.42);
+    }
+    .lead-action.request {
+      color: var(--accent);
+      border-color: rgba(201,169,110,.28);
+      background: var(--adim);
+    }
+    .lead-action.request:hover {
+      background: rgba(201,169,110,.15);
+      border-color: rgba(201,169,110,.44);
+    }
+    .lead-action.decline:hover {
+      color: var(--red);
+      border-color: rgba(248,113,113,.28);
+      background: var(--reddim);
+    }
+    .lead-action:disabled {
+      opacity: .52;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .lead-state {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 10px 13px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      color: var(--ts);
+      background: var(--bg);
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+    .lead-empty {
+      padding: 34px 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      background: var(--bg1);
+      color: var(--ts);
+      text-align: center;
+    }
+    @media(max-width:1020px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .timeline { grid-template-columns: repeat(2, 1fr); }
+      .lawyer-grid { grid-template-columns: repeat(2, 1fr); }
+      .lead-head { flex-direction: column; }
+    }
+    @media(max-width:680px) {
+      .lawyer-wrap { padding: 0 16px; }
+      .lawyer-hero { padding: 52px 0 42px; }
+      .workflow-form .form-row { grid-template-columns: 1fr; }
+      .timeline,
+      .lawyer-grid,
+      .trust-grid { grid-template-columns: 1fr; }
+      .status-line { align-items: flex-start; flex-direction: column; }
+      .hero-actions { flex-direction: column; }
+      .hero-actions .btn-primary,
+      .hero-actions .muted-action { width: 100%; }
+      .lead-card { padding: 20px; }
+      .lead-card-top { flex-direction: column; }
+      .lead-actions,
+      .lead-action,
+      .lead-state { width: 100%; }
+    }
+  </style>
 </head>
-<body data-page="join-lawyer">
-<script src="../js/utils.js"></script>
-<script src="../js/i18n.js"></script>
-<script src="../js/nav.js"></script>
-<script>
-function injectNav() {
-  document.body.insertAdjacentHTML('afterbegin', `
-  <nav id="nav">
-    <a href="../index.html" class="nav-logo"><div class="nav-logo-box">N</div><span class="nav-logo-name">NyaySetu</span></a>
-    <div class="nav-tabs">
-      <a class="nav-tab" href="../index.html"  data-page="home"><span data-i18n="nav_home">Home</span></a>
-      <a class="nav-tab" href="chat.html"       data-page="chat"><span class="nav-icon">⚖</span> <span data-i18n="nav_chat">AI Chat</span></a>
-      <a class="nav-tab" href="documents.html"  data-page="docs"><span class="nav-icon">📄</span> <span data-i18n="nav_docs">Documents</span></a>
-      <a class="nav-tab" href="simplifier.html" data-page="simplify"><span class="nav-icon">📚</span> <span data-i18n="nav_simplify">Simplifier</span></a>
-      <a class="nav-tab" href="students.html"   data-page="students"><span class="nav-icon">🎓</span> <span data-i18n="nav_students">Students</span></a>
-      <a class="nav-tab" href="lawyers.html" data-page="lawyers"><span class="nav-icon">⚖️</span> <span data-i18n="nav_lawyers">Lawyers</span></a>
-    </div>
-    <div class="nav-right">
-      <div class="nav-lang">${typeof getLangSelectHTML === 'function' ? getLangSelectHTML() : ''}</div>
-      <button class="nav-icon-btn" id="theme-btn" onclick="toggleTheme()">☀</button>
-      <a href="chat.html" class="btn-nav" data-i18n="nav_ask">Ask a Question</a>
-      <span id="auth-nav-slot"></span>
-    </div>
-  </nav>
-  <div id="toast"><span id="toast-icon">✓</span><span id="toast-msg"></span></div>`);
-  if (typeof initTheme === 'function') initTheme();
-  if (typeof setActiveNav === 'function') setActiveNav();
-}
-injectNav();
-</script>
+<body data-page="lawyers">
+  <script src="../js/utils.js"></script>
+  <script src="../js/i18n.js"></script>
+  <script src="../js/nav.js"></script>
+  <script>injectNav();</script>
 
-<main style="padding-top:64px">
-
-  <!-- HERO -->
-  <section class="page-hero">
-    <div class="container">
-      <div class="eyebrow fi">Lawyer Network</div>
-      <h1 class="sh2 fi">Empower your legal practice.</h1>
-      <p class="sub fi" style="max-width:500px;margin-bottom:24px">Join the NyaySetu network to connect with clients seeking expert legal representation. Grow your practice through our trusted AI-powered platform.</p>
-    </div>
-  </section>
-
-  <div class="content-area">
-    <div class="container">
-
-      <div class="signup-grid">
+  <main class="lawyer-page">
+    <section class="lawyer-hero">
+      <div class="lawyer-wrap hero-grid">
         <div>
-          <div class="eyebrow fi">For Legal Professionals</div>
-          <h2 class="sh2 fi">Expand your client base</h2>
-          <p class="sub fi" style="max-width:440px">NyaySetu connects verified advocates with clients facing real legal challenges. We handle the initial analysis, you provide the expertise.</p>
-          <div class="benefit-list">
-            <div class="benefit fi">
-              <div class="benefit-ico">📈</div>
-              <div><div class="benefit-title">Verified Leads</div><div class="benefit-desc">Receive highly specific case details before connecting, saving you time on initial consultations.</div></div>
-            </div>
-            <div class="benefit fi">
-              <div class="benefit-ico">💼</div>
-              <div><div class="benefit-title">Practice Growth</div><div class="benefit-desc">Increase your visibility to thousands of daily users looking for specialized legal assistance.</div></div>
-            </div>
-            <div class="benefit fi">
-              <div class="benefit-ico">🛡️</div>
-              <div><div class="benefit-title">Trusted Platform</div><div class="benefit-desc">Join a curated network of professionals. All lawyer profiles are verified to maintain quality and trust.</div></div>
-            </div>
+          <div class="eyebrow-mini">Lawyer review network</div>
+          <h1 class="hero-title">Connect with Verified Lawyers</h1>
+          <p class="hero-sub">Get your legal documents reviewed and certified by lawyers who understand your case type, location, and language needs.</p>
+          <div class="hero-actions">
+            <button class="btn-primary" type="button" onclick="scrollToCaseForm()">Submit Your Case</button>
+            <button class="muted-action" type="button" onclick="scrollToLeadInbox()">View Lead Inbox</button>
+            <a class="muted-action" href="chat.html">Ask AI First</a>
           </div>
         </div>
-        <div class="signup-form-card fi">
-          <div class="signup-title">Join as a Lawyer</div>
-          <div class="signup-sub">Apply to become a verified NyaySetu advocate.</div>
-          
-          <div class="form-group">
-            <label class="form-label">Full Name *</label>
-            <input class="form-input" id="l-name" placeholder="Advocate Name" type="text" required>
-          </div>
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Email Address *</label>
-              <input class="form-input" id="l-email" placeholder="your@email.com" type="email" required>
+
+        <aside class="workflow-card" id="submit-case">
+          <h2>Submit your case</h2>
+          <p>Create a case, request lawyer review, track approval, pay, and receive your final document.</p>
+          <form class="workflow-form" id="case-form" onsubmit="submitCase(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Case Type</label>
+                <select class="form-select" id="case-type" required>
+                  <option value="">Select type</option>
+                  <option>Consumer complaint</option>
+                  <option>Rent dispute</option>
+                  <option>Property dispute</option>
+                  <option>Family matter</option>
+                  <option>Criminal matter</option>
+                  <option>Cyber fraud</option>
+                  <option>Corporate contract</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Location</label>
+                <input class="form-input" id="case-location" placeholder="City or state" required>
+              </div>
             </div>
             <div class="form-group">
-              <label class="form-label">Phone Number *</label>
-              <input class="form-input" id="l-phone" placeholder="10-digit number" type="tel" required>
-            </div>
-          </div>
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Qualification *</label>
-              <select class="form-select" id="l-qual" required>
-                <option value="">Select qualification</option>
-                <option>LLB</option>
-                <option>LLM</option>
-                <option>PhD in Law</option>
-                <option>Other</option>
-              </select>
+              <label class="form-label">Preferred Language</label>
+              <input class="form-input" id="case-language" placeholder="Hindi, English, Marathi">
             </div>
             <div class="form-group">
-              <label class="form-label">Specialization *</label>
-              <select class="form-select" id="l-spec" required>
-                <option value="">Select primary area</option>
-                <option>Criminal Law</option>
-                <option>Civil / Property Law</option>
-                <option>Family / Divorce Law</option>
-                <option>Corporate Law</option>
-                <option>Cyber Law</option>
-                <option>Consumer Protection</option>
-                <option>Labor & Employment</option>
-                <option>General Practice</option>
-              </select>
+              <label class="form-label">Case Summary</label>
+              <textarea class="form-textarea" id="case-summary" placeholder="Briefly explain what happened and what document you need reviewed." required></textarea>
             </div>
-          </div>
-          
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Years of Experience *</label>
-              <input class="form-input" id="l-exp" placeholder="e.g. 5" type="number" min="0" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Location (City/State) *</label>
-              <input class="form-input" id="l-loc" placeholder="e.g. New Delhi" type="text" required>
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label class="form-label">Expected Fees (per consultation) *</label>
-            <input class="form-input" id="l-fees" placeholder="e.g. ₹1500" type="text" required>
-          </div>
-          
-          <div class="form-group">
-            <label class="form-label">Short Bio (Optional)</label>
-            <textarea class="form-input" id="l-bio" placeholder="Briefly describe your practice and achievements..." style="min-height: 80px; resize: vertical;"></textarea>
-          </div>
-          
-          <div class="form-group">
-            <label class="form-label">Upload Certificate / Bar ID *</label>
-            <div style="border: 1px dashed var(--border2); padding: 16px; border-radius: 8px; text-align: center; cursor: pointer; background: var(--bg);" onclick="document.getElementById('l-file').click()">
-              <span style="font-size: 13px; color: var(--ts);">📄 Click to upload document (PDF/JPG)</span>
-              <input type="file" id="l-file" style="display: none;" accept=".pdf,.jpg,.jpeg,.png">
-            </div>
-          </div>
-          
-          <div style="background: var(--adim); border: 1px solid rgba(201,169,110,.2); padding: 12px; border-radius: 8px; margin-bottom: 20px;">
-            <p style="font-size: 12px; color: var(--accent); margin: 0; display: flex; align-items: flex-start; gap: 8px;">
-              <span style="font-size: 16px;">🛡️</span>
-              <span><strong>Verification Required:</strong> All lawyer profiles will be verified before approval to ensure platform trust and quality.</span>
-            </p>
-          </div>
-          
-          <button class="btn-primary" style="width:100%;justify-content:center;font-size:14.5px;padding:13px" onclick="submitLawyerForm()">
-            ⚖️ Apply as Lawyer
-          </button>
+            <button class="btn-primary" id="create-case-btn" type="submit">Create Case</button>
+          </form>
+          <div class="workflow-progress" id="case-progress" style="display:none"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="lawyer-wrap">
+        <div class="section-head center">
+          <h2 class="section-title">How It Works</h2>
+          <p class="section-sub">A clear path from AI guidance to lawyer-certified delivery.</p>
+        </div>
+        <div class="timeline">
+          <div class="timeline-step fi"><div class="step-num">1</div><h3>Ask AI</h3><p>Start with plain-language legal guidance for your situation.</p></div>
+          <div class="timeline-step fi"><div class="step-num">2</div><h3>Generate Document</h3><p>Create a draft notice, complaint, affidavit, or agreement.</p></div>
+          <div class="timeline-step fi"><div class="step-num">3</div><h3>Request Lawyer Review</h3><p>Move your case into the verified lawyer queue.</p></div>
+          <div class="timeline-step fi"><div class="step-num">4</div><h3>Lawyer Reviews and Edits</h3><p>A matched lawyer checks facts, structure, and legal risk.</p></div>
+          <div class="timeline-step fi"><div class="step-num">5</div><h3>Lawyer Verifies and Approves</h3><p>Your document is approved after professional review.</p></div>
+          <div class="timeline-step fi"><div class="step-num">6</div><h3>Payment</h3><p>Pay only after the case reaches approval stage.</p></div>
+          <div class="timeline-step fi"><div class="step-num">7</div><h3>Final Document Delivery</h3><p>Receive the final reviewed document for download or filing.</p></div>
         </div>
       </div>
+    </section>
 
-    </div>
-  </div>
-</main>
+    <section class="section lead-section" id="lead-inbox">
+      <div class="lawyer-wrap lead-inbox">
+        <div class="lead-head">
+          <div>
+            <div class="lead-title-row">
+              <h2>Lead Inbox</h2>
+              <span class="lead-count" id="lead-count">4 Demo Leads</span>
+              <span class="lead-sort">sorted by urgency</span>
+            </div>
+            <p class="lead-copy">Lawyers can review concise case facts, category, city, expected consultation budget, urgency, and whether a summary is ready before selecting a lead.</p>
+          </div>
+          <button class="muted-action" type="button" onclick="loadLeadInbox()">Refresh Leads</button>
+        </div>
+        <div class="lead-list" id="lead-inbox-list"></div>
+      </div>
+    </section>
 
-<script>
-function submitLawyerForm() {
-  const name  = document.getElementById('l-name').value.trim();
-  const email = document.getElementById('l-email').value.trim();
-  const phone = document.getElementById('l-phone').value.trim();
-  const qual  = document.getElementById('l-qual').value;
-  const spec  = document.getElementById('l-spec').value;
-  const exp   = document.getElementById('l-exp').value.trim();
-  const loc   = document.getElementById('l-loc').value.trim();
-  const fees  = document.getElementById('l-fees').value.trim();
-  const file  = document.getElementById('l-file').files.length > 0;
+    <section class="section">
+      <div class="lawyer-wrap">
+        <div class="section-head">
+          <h2 class="section-title">Featured Lawyers</h2>
+          <p class="section-sub">Demo profiles shown for a complete browsing experience. Live lawyer accounts from MongoDB appear here when available.</p>
+        </div>
+        <div class="lawyer-grid" id="featured-lawyers"></div>
+      </div>
+    </section>
 
-  if (!name || !email || !phone || !qual || !spec || !exp || !loc || !fees) {
-    if (typeof showToast === 'function') showToast('Please fill in all required fields', '⚠');
-    else alert('Please fill in all required fields');
-    return;
-  }
-  
-  if (!email.includes('@')) {
-    if (typeof showToast === 'function') showToast('Please enter a valid email address', '⚠');
-    else alert('Please enter a valid email address');
-    return;
-  }
-  
-  if (!file) {
-    if (typeof showToast === 'function') showToast('Please upload your Bar ID or Certificate', '⚠');
-    else alert('Please upload your Bar ID or Certificate');
-    return;
-  }
+    <section class="section">
+      <div class="lawyer-wrap">
+        <div class="trust-grid">
+          <div class="trust-card fi">
+            <h3>Verified Lawyers</h3>
+            <p>Profiles are reviewed before they can accept cases or approve documents.</p>
+          </div>
+          <div class="trust-card fi">
+            <h3>Secure Data</h3>
+            <p>Case details are anonymized for browsing and shared only when a lawyer is assigned.</p>
+          </div>
+          <div class="trust-card fi">
+            <h3>Transparent Pricing</h3>
+            <p>The workflow separates review, approval, payment, and final delivery so every stage is clear.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  // Simulate success
-  const card = document.querySelector('.signup-form-card');
-  card.innerHTML = \`
-    <div style="text-align:center;padding:40px 20px">
-      <div style="font-size:52px;margin-bottom:16px">✅</div>
-      <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--tp);margin-bottom:8px">Application Received</div>
-      <div style="font-size:14px;color:var(--ts);line-height:1.7;max-width:300px;margin:0 auto 24px">Thank you, Advocate \${esc(name)}. Your application is under review. Our verification team will contact you at <strong style="color:var(--tp)">\${esc(email)}</strong> shortly.</div>
-      <button class="btn-ghost" onclick="window.location.href='../index.html'" style="margin:0 auto">
-        ← Return to Home
-      </button>
-    </div>\`;
-    
-  if (typeof showToast === 'function') showToast('Application submitted successfully!', '⚖️');
-}
+  <script>
+    const STATUS_FLOW = ['open', 'pending_review', 'assigned', 'approved', 'paid', 'completed'];
+    const STATUS_LABELS = {
+      open: 'Open',
+      pending_review: 'Pending Review',
+      assigned: 'Assigned',
+      approved: 'Approved',
+      paid: 'Paid',
+      completed: 'Completed'
+    };
+    const DEMO_LAWYERS = [
+      { id: 'l-101', name: 'Adv. Rajesh Kumar', specialization: 'Criminal Law', experience: '15+ Years', location: 'New Delhi', rating: '4.9/5' },
+      { id: 'l-102', name: 'Adv. Sneha Sharma', specialization: 'Family and Divorce', experience: '8+ Years', location: 'Mumbai', rating: '4.8/5' },
+      { id: 'l-103', name: 'Adv. Vikram Singh', specialization: 'Property and Real Estate', experience: '12+ Years', location: 'Bengaluru', rating: '4.9/5' },
+      { id: 'l-106', name: 'Adv. Meera Reddy', specialization: 'Consumer Rights', experience: '9+ Years', location: 'Chennai', rating: '4.7/5' }
+    ];
+    const DEMO_LEADS = [
+      {
+        id: 'demo-property-deposit',
+        demo: true,
+        category: 'Property',
+        title: 'Tenant deposit recovery',
+        summary: 'User has rent agreement, payment receipts, and landlord messages.',
+        city: 'Delhi',
+        budget: '₹1,500',
+        summaryReady: true,
+        urgency: 'Medium'
+      },
+      {
+        id: 'demo-criminal-bail',
+        demo: true,
+        category: 'Criminal',
+        title: 'Anticipatory bail guidance',
+        summary: 'Family received police call after FIR threat; user needs urgent consultation.',
+        city: 'Mumbai',
+        budget: '₹3,000',
+        summaryReady: true,
+        urgency: 'High'
+      },
+      {
+        id: 'demo-cyber-freeze',
+        demo: true,
+        category: 'Cyber Law',
+        title: 'Bank account freeze after fraud report',
+        summary: 'User has cyber complaint acknowledgement and needs help responding to bank notices.',
+        city: 'Bengaluru',
+        budget: '₹2,000',
+        summaryReady: false,
+        urgency: 'High'
+      },
+      {
+        id: 'demo-consumer-refund',
+        demo: true,
+        category: 'Consumer',
+        title: 'Defective appliance refund',
+        summary: 'User has invoice, warranty card, service emails, and wants a consumer complaint reviewed.',
+        city: 'Pune',
+        budget: '₹1,200',
+        summaryReady: true,
+        urgency: 'Low'
+      }
+    ];
+    const URGENCY_ORDER = { High: 3, Medium: 2, Low: 1 };
 
-// Fallback escape func in case utils.js fails to load
-function esc(s) {
-  if (!s) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+    let activeCase = null;
+    let leadItems = [];
+    const API_BASE = typeof API_BASE_URL !== 'undefined' ? API_BASE_URL : '';
 
-if (typeof initScrollAnim === 'function') {
-  initScrollAnim();
-}
+    document.addEventListener('DOMContentLoaded', () => {
+      initScrollAnim();
+      renderFeaturedLawyers(DEMO_LAWYERS);
+      renderLeadInbox(DEMO_LEADS, true);
+      loadLeadInbox();
+      loadCaseFromUrlOrStorage();
+    });
 
-// Add simple file input feedback
-document.getElementById('l-file').addEventListener('change', function(e) {
-  const fileName = e.target.files[0]?.name;
-  if (fileName) {
-    e.target.parentElement.querySelector('span').textContent = '📄 ' + fileName;
-    e.target.parentElement.style.borderColor = 'var(--accent)';
-    e.target.parentElement.style.background = 'var(--adim)';
-  }
-});
-</script>
+    function scrollToCaseForm() {
+      document.getElementById('submit-case')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => document.getElementById('case-type')?.focus(), 420);
+    }
+
+    function scrollToLeadInbox() {
+      document.getElementById('lead-inbox')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function renderFeaturedLawyers(lawyers) {
+      document.getElementById('featured-lawyers').innerHTML = lawyers.map(lawyer => `
+        <article class="lawyer-card fi">
+          <div class="lawyer-avatar">${esc(getInitials(lawyer.name))}</div>
+          <div class="lawyer-name">${esc(lawyer.name)}</div>
+          <div class="lawyer-meta">
+            <span><strong>Specialization:</strong> ${esc(lawyer.specialization)}</span>
+            <span><strong>Experience:</strong> ${esc(lawyer.experience)}</span>
+            <span><strong>Location:</strong> ${esc(lawyer.location)}</span>
+            <span class="rating">Rating ${esc(lawyer.rating)}</span>
+          </div>
+          <button class="btn-primary" type="button" onclick="prefillCaseType('${escAttr(lawyer.specialization)}')">Request Review</button>
+        </article>
+      `).join('');
+      initScrollAnim(document);
+    }
+
+    function prefillCaseType(type) {
+      const select = document.getElementById('case-type');
+      const normalized = String(type || '').toLowerCase();
+      const option = Array.from(select.options).find(opt => normalized.includes(opt.textContent.toLowerCase().split(' ')[0]));
+      if (option) select.value = option.value;
+      scrollToCaseForm();
+    }
+
+    async function loadLeadInbox() {
+      const lawyer = getLawyerContext();
+
+      if (!lawyer?.id || lawyer.role !== 'lawyer') {
+        renderLeadInbox(DEMO_LEADS, true);
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/cases?lawyerId=${encodeURIComponent(lawyer.id)}`);
+        if (!res.ok) throw new Error('Unable to load leads');
+        const cases = await res.json();
+        const liveLeads = cases.map(mapCaseToLead).filter(Boolean);
+        renderLeadInbox(liveLeads.length ? liveLeads : DEMO_LEADS, !liveLeads.length);
+      } catch (err) {
+        renderLeadInbox(DEMO_LEADS, true);
+      }
+    }
+
+    function renderLeadInbox(leads, isDemo = false) {
+      leadItems = sortLeads(leads.map(lead => ({ ...lead })));
+      const count = document.getElementById('lead-count');
+      const list = document.getElementById('lead-inbox-list');
+
+      if (count) count.textContent = `${leadItems.length} ${isDemo ? 'Demo ' : ''}${leadItems.length === 1 ? 'Lead' : 'Leads'}`;
+      if (!list) return;
+
+      if (!leadItems.length) {
+        list.innerHTML = '<div class="lead-empty">No open leads are available right now.</div>';
+        return;
+      }
+
+      list.innerHTML = leadItems.map(renderLeadCard).join('');
+      initScrollAnim(list);
+    }
+
+    function renderLeadCard(lead) {
+      const id = escAttr(lead.id);
+      const actionState = getLeadState(lead);
+      const accepted = isLeadJoined(lead);
+      const declined = lead.localStatus === 'declined';
+      const selected = lead.selected || accepted;
+      const summaryStatus = lead.summaryReady ? 'Case summary ready' : 'Summary pending';
+
+      return `
+        <article class="lead-card fi ${selected ? 'selected' : ''} ${declined ? 'declined' : ''}" tabindex="0" onclick="selectLead('${id}')" onkeydown="handleLeadKey(event, '${id}')">
+          <div class="lead-card-top">
+            <span class="lead-category">${esc(lead.category || 'General')}</span>
+            <span class="lead-urgency ${esc((lead.urgency || '').toLowerCase())}">${esc(lead.urgency || 'Medium')}</span>
+          </div>
+          <h3 class="lead-name">${esc(lead.title || 'Open legal lead')}</h3>
+          <p class="lead-summary">${esc(lead.summary || 'No summary provided yet.')}</p>
+          <div class="lead-meta">
+            <span class="lead-chip">${esc(lead.city || 'City pending')}</span>
+            <span class="lead-chip">${esc(lead.budget || 'Budget pending')}</span>
+            <span class="lead-chip ${lead.summaryReady ? 'ready' : 'neutral'}">${summaryStatus}</span>
+          </div>
+          <div class="lead-actions">
+            <button class="lead-action accept" id="lead-accept-${id}" type="button" onclick="event.stopPropagation(); acceptLead('${id}')" ${accepted || declined ? 'disabled' : ''}>${accepted ? 'Lead Joined' : 'Accept Lead'}</button>
+            <button class="lead-action request" type="button" onclick="event.stopPropagation(); requestLeadDocuments('${id}')" ${accepted || declined ? 'disabled' : ''}>Request Documents</button>
+            <button class="lead-action decline" type="button" onclick="event.stopPropagation(); declineLead('${id}')" ${accepted || declined ? 'disabled' : ''}>Decline</button>
+            ${actionState ? `<span class="lead-state">${esc(actionState)}</span>` : ''}
+          </div>
+        </article>
+      `;
+    }
+
+    function sortLeads(leads) {
+      return leads.sort((a, b) => (URGENCY_ORDER[b.urgency] || 0) - (URGENCY_ORDER[a.urgency] || 0));
+    }
+
+    function mapCaseToLead(caseData) {
+      const id = caseData.id || caseData._id;
+      if (!id) return null;
+
+      return {
+        id,
+        demo: false,
+        category: getLeadCategory(caseData.problemType),
+        title: getLeadTitle(caseData.problemType, caseData.summary),
+        summary: caseData.summary || 'No summary provided.',
+        city: caseData.location || 'City pending',
+        budget: 'Budget pending',
+        summaryReady: caseData.status === 'pending_review',
+        urgency: getLeadUrgency(caseData),
+        applicationStatus: caseData.applicationStatus || null
+      };
+    }
+
+    function getLeadCategory(type) {
+      const label = String(type || 'General').replace(/\s+matter$/i, '').trim();
+      if (/cyber/i.test(label)) return 'Cyber Law';
+      if (/rent|property/i.test(label)) return 'Property';
+      if (/criminal|bail|fir/i.test(label)) return 'Criminal';
+      if (/consumer/i.test(label)) return 'Consumer';
+      if (/family|divorce/i.test(label)) return 'Family';
+      return label || 'General';
+    }
+
+    function getLeadTitle(type, summary) {
+      const text = String(summary || '').trim();
+      if (text) {
+        const firstSentence = text.split(/[.!?]/)[0].trim();
+        return firstSentence.length > 58 ? firstSentence.slice(0, 55).trim() + '...' : firstSentence;
+      }
+      return `${getLeadCategory(type)} consultation`;
+    }
+
+    function getLeadUrgency(caseData) {
+      const text = `${caseData.problemType || ''} ${caseData.summary || ''}`.toLowerCase();
+      if (/(arrest|bail|fir|police|fraud|freeze|threat|urgent|criminal|cyber)/.test(text)) return 'High';
+      if (/(property|rent|family|consumer|contract|notice)/.test(text)) return 'Medium';
+      return 'Low';
+    }
+
+    function selectLead(leadId) {
+      leadItems = leadItems.map(lead => ({
+        ...lead,
+        selected: lead.id === leadId && lead.localStatus !== 'declined'
+      }));
+      renderLeadInbox(leadItems, leadItems.every(lead => lead.demo));
+    }
+
+    function handleLeadKey(event, leadId) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        selectLead(leadId);
+      }
+    }
+
+    async function acceptLead(leadId) {
+      const lead = leadItems.find(item => item.id === leadId);
+      if (!lead || isLeadJoined(lead)) return;
+
+      if (lead.demo) {
+        updateLeadLocalStatus(leadId, 'accepted');
+        showToast('Lead selected');
+        return;
+      }
+
+      const lawyer = getLawyerContext();
+      if (!lawyer?.id || lawyer.role !== 'lawyer') {
+        showToast('Sign in as a lawyer to accept leads', '!');
+        return;
+      }
+
+      const btn = document.getElementById(`lead-accept-${leadId}`);
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Joining...';
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/apply-case`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ caseId: leadId, lawyerId: lawyer.id, role: 'lawyer' })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Unable to accept lead');
+        leadItems = leadItems.map(item => item.id === leadId
+          ? { ...item, applicationStatus: data.status || 'pending', selected: true }
+          : item
+        );
+        renderLeadInbox(leadItems, false);
+        showToast('Lead joined');
+      } catch (err) {
+        showToast(err.message, '!');
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = 'Accept Lead';
+        }
+      }
+    }
+
+    function requestLeadDocuments(leadId) {
+      updateLeadLocalStatus(leadId, 'documents');
+      showToast('Document request noted');
+    }
+
+    function declineLead(leadId) {
+      updateLeadLocalStatus(leadId, 'declined');
+      showToast('Lead declined');
+    }
+
+    function updateLeadLocalStatus(leadId, status) {
+      leadItems = leadItems.map(lead => lead.id === leadId
+        ? { ...lead, localStatus: status, selected: status !== 'declined' }
+        : lead
+      );
+      renderLeadInbox(leadItems, leadItems.every(lead => lead.demo));
+    }
+
+    function getLeadState(lead) {
+      if (isLeadJoined(lead)) return 'Joined as lead';
+      if (lead.localStatus === 'documents') return 'Documents requested';
+      if (lead.localStatus === 'declined') return 'Declined';
+      if (lead.selected) return 'Selected';
+      return '';
+    }
+
+    function isLeadJoined(lead) {
+      return lead.localStatus === 'accepted' || ['pending', 'accepted'].includes(lead.applicationStatus);
+    }
+
+    function getLawyerContext() {
+      const user = typeof getStoredUser === 'function' ? getStoredUser() : null;
+      if (!user) return null;
+      const profile = user.profile || {};
+      return {
+        ...user,
+        id: user.id || user._id,
+        role: String(user.role || profile.role || 'user').toLowerCase()
+      };
+    }
+
+    async function loadCaseFromUrlOrStorage() {
+      const urlCaseId = new URLSearchParams(window.location.search).get('caseId');
+      const savedCaseId = localStorage.getItem('nyaysetu_active_case_id');
+      const caseId = urlCaseId || savedCaseId;
+      if (!caseId) return;
+
+      try {
+        const res = await fetch(`${API_BASE}/case/${caseId}`);
+        if (!res.ok) throw new Error('Case not found');
+        activeCase = await res.json();
+        localStorage.setItem('nyaysetu_active_case_id', activeCase.id);
+        renderCaseProgress();
+      } catch (err) {
+        localStorage.removeItem('nyaysetu_active_case_id');
+      }
+    }
+
+    async function submitCase(event) {
+      event.preventDefault();
+      const btn = document.getElementById('create-case-btn');
+      btn.disabled = true;
+      btn.textContent = 'Creating...';
+
+      const user = typeof getStoredUser === 'function' ? getStoredUser() : null;
+      const payload = {
+        userId: user?.id || '',
+        problemType: document.getElementById('case-type').value,
+        location: document.getElementById('case-location').value.trim(),
+        language: document.getElementById('case-language').value.trim(),
+        summary: document.getElementById('case-summary').value.trim(),
+        facts: [document.getElementById('case-summary').value.trim()],
+        documents: []
+      };
+
+      try {
+        const res = await fetch(`${API_BASE}/create-case`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Unable to create case');
+
+        activeCase = data;
+        localStorage.setItem('nyaysetu_active_case_id', activeCase.id);
+        showToast('Case created');
+        renderCaseProgress();
+      } catch (err) {
+        showToast(err.message, '!');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Create Case';
+      }
+    }
+
+    async function updateWorkflow(endpoint, payload = {}) {
+      if (!activeCase?.id) return;
+      const res = await fetch(`${API_BASE}${endpoint}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ caseId: activeCase.id, ...payload })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Workflow update failed');
+      activeCase = data;
+      renderCaseProgress();
+      return data;
+    }
+
+    async function requestLawyerReview() {
+      try {
+        await updateWorkflow('/request-lawyer-review');
+        showToast('Lawyer review requested');
+      } catch (err) {
+        showToast(err.message, '!');
+      }
+    }
+
+    async function completePayment() {
+      try {
+        await updateWorkflow('/complete-payment', {
+          amount: 999,
+          reference: `NS-${Date.now()}`
+        });
+        showToast('Payment marked complete');
+      } catch (err) {
+        showToast(err.message, '!');
+      }
+    }
+
+    async function finalDelivery() {
+      try {
+        await updateWorkflow('/final-delivery', {
+          finalDocument: 'Final lawyer-reviewed document is ready for delivery.'
+        });
+        showToast('Final document delivered');
+      } catch (err) {
+        showToast(err.message, '!');
+      }
+    }
+
+    function renderCaseProgress() {
+      const panel = document.getElementById('case-progress');
+      if (!activeCase) {
+        panel.style.display = 'none';
+        return;
+      }
+
+      const index = Math.max(0, STATUS_FLOW.indexOf(activeCase.status));
+      const steps = STATUS_FLOW.map((status, i) => `<div class="progress-step ${i <= index ? 'done' : ''}" title="${STATUS_LABELS[status]}"></div>`).join('');
+
+      panel.style.display = 'block';
+      panel.innerHTML = `
+        <div class="status-line">
+          <span>Case ID: ${esc(activeCase.id)}</span>
+          <span class="status-pill">${esc(STATUS_LABELS[activeCase.status] || activeCase.status)}</span>
+        </div>
+        <div class="progress-track">${steps}</div>
+        <div class="case-output">
+          <strong>${esc(activeCase.problemType)}</strong><br>
+          ${esc(activeCase.summary || '').slice(0, 180)}
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+          ${getNextActionHtml(activeCase.status)}
+          <button class="muted-action" type="button" onclick="refreshActiveCase()">Refresh Status</button>
+        </div>
+      `;
+    }
+
+    function getNextActionHtml(status) {
+      if (status === 'open') return '<button class="btn-primary" type="button" onclick="requestLawyerReview()">Request Lawyer Review</button>';
+      if (status === 'pending_review') return '<span class="muted-action">Waiting for lawyer applications</span>';
+      if (status === 'assigned') return '<span class="muted-action">Assigned lawyer is reviewing</span>';
+      if (status === 'approved') return '<button class="btn-primary" type="button" onclick="completePayment()">Proceed to Payment</button>';
+      if (status === 'paid') return '<button class="btn-primary" type="button" onclick="finalDelivery()">Final Document Delivery</button>';
+      if (status === 'completed') return '<span class="muted-action">Completed</span>';
+      return '';
+    }
+
+    async function refreshActiveCase() {
+      if (!activeCase?.id) return;
+      try {
+        const res = await fetch(`${API_BASE}/case/${activeCase.id}`);
+        if (!res.ok) throw new Error('Unable to refresh case');
+        activeCase = await res.json();
+        renderCaseProgress();
+        showToast('Status refreshed');
+      } catch (err) {
+        showToast(err.message, '!');
+      }
+    }
+
+    function getInitials(name) {
+      return String(name || 'L').split(/\s+/).map(part => part[0]).join('').replace(/[^A-Za-z]/g, '').slice(0, 2) || 'L';
+    }
+
+    function escAttr(value) {
+      return String(value || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    }
+  </script>
 </body>
 </html>
+

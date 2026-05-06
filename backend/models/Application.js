@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const ApplicationSchema = new mongoose.Schema({
   caseId: { type: mongoose.Schema.Types.ObjectId, ref: 'Case', required: true, index: true },
-  lawyerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
+  lawyerId: { type: String, required: true, index: true },
   status: { type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending', index: true },
   createdAt: { type: Date, default: Date.now }
 });
