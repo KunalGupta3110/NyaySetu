@@ -156,32 +156,7 @@
 <script src="../js/utils.js"></script>
 <script src="../js/i18n.js"></script>
 <script src="../js/nav.js"></script>
-<script>
-function injectNav() {
-  document.body.insertAdjacentHTML('afterbegin', `
-  <nav id="nav">
-    <a href="../index.html" class="nav-logo"><div class="nav-logo-box">N</div><span class="nav-logo-name">NyaySetu</span></a>
-    <div class="nav-tabs">
-      <a class="nav-tab" href="../index.html"  data-page="home"><span data-i18n="nav_home">Home</span></a>
-      <a class="nav-tab" href="chat.html"       data-page="chat"><span class="nav-icon">⚖</span> <span data-i18n="nav_chat">AI Chat</span></a>
-      <a class="nav-tab" href="documents.html"  data-page="docs"><span class="nav-icon">📄</span> <span data-i18n="nav_docs">Documents</span></a>
-      <a class="nav-tab" href="simplifier.html" data-page="simplify"><span class="nav-icon">📚</span> <span data-i18n="nav_simplify">Simplifier</span></a>
-      <a class="nav-tab" href="students.html"   data-page="students"><span class="nav-icon">🎓</span> <span data-i18n="nav_students">Students</span></a>
-      <a class="nav-tab" href="lawyers.html" data-page="lawyers"><span class="nav-icon">⚖️</span> <span data-i18n="nav_lawyers">Lawyers</span></a>
-      <a class="nav-tab" href="about.html"     data-page="about"><span class="nav-icon">ℹ️</span> <span data-i18n="footer_about">About Us</span></a>
-    </div>
-    <div class="nav-right">
-      <div class="nav-lang">${typeof getLangSelectHTML === 'function' ? getLangSelectHTML() : ''}</div>
-      <button class="nav-icon-btn" id="theme-btn" onclick="toggleTheme()">☀</button>
-      <a href="chat.html" class="btn-nav" data-i18n="nav_ask">Ask a Question</a>
-      <span id="auth-nav-slot"></span>
-    </div>
-  </nav>
-  <div id="toast"><span id="toast-icon">✓</span><span id="toast-msg"></span></div>`);
-  initTheme(); setActiveNav();
-}
-injectNav();
-</script>
+<script>injectNav();</script>
 
 <main style="padding-top:64px">
 
