@@ -369,23 +369,43 @@
 /* ── RESPONSIVE overrides ──────────────────────────────────── */
 @media (max-width: 1024px) {
   .doc-layout { grid-template-columns: 1fr; }
-  .preview-panel { position: static; }
-  .auth-split { grid-template-columns: 1fr; gap: 40px; }
+  .doc-page { padding: 28px 0 60px; }
+  .doc-panel,
+  .preview-panel { width: 100%; }
+  .preview-panel { position: static; top: auto; }
+  .preview-header { flex-wrap: wrap; gap: 12px; }
+  .preview-actions { width: 100%; justify-content: flex-start; flex-wrap: wrap; }
+  .doc-types { grid-template-columns: 1fr; }
+  .doc-type-btn { width: 100%; }
+  .simplifier-layout { grid-template-columns: 1fr; }
+  .auth-split { grid-template-columns: 1fr; gap: 36px; }
   .auth-left { display: none; }
-  .stats-row { grid-template-columns: repeat(2, 1fr); }
-  .quick-actions { grid-template-columns: repeat(2, 1fr); }
+  .auth-card { padding: 28px; }
+  .stats-row { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+  .quick-actions { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
   .dash-grid { grid-template-columns: 1fr; }
+  .activity-item { flex-wrap: wrap; }
+  .activity-info { min-width: 0; }
   .how-steps { grid-template-columns: 1fr; gap: 28px; }
 }
 @media (max-width: 768px) {
   .simplifier-layout { grid-template-columns: 1fr; }
+  .auth-card { padding: 24px; }
+  .students-filter { gap: 10px; }
   .hero { padding: 60px 0 48px; }
   .hero-stats { gap: 24px; }
-  .stats-row { grid-template-columns: repeat(2, 1fr); }
-  .quick-actions { grid-template-columns: repeat(2, 1fr); }
+  .stats-row { grid-template-columns: 1fr; }
+  .quick-actions { grid-template-columns: 1fr; }
+  .doc-types { grid-template-columns: 1fr; }
+  .preview-content { min-height: 320px; }
+  .chat-page, .auth-page, .students-page, .simplifier-page, .dashboard-page { padding-left: 16px; padding-right: 16px; }
 }
 @media (max-width: 480px) {
-  .stats-row { grid-template-columns: 1fr 1fr; }
+  .stats-row { grid-template-columns: 1fr; }
   .hero-stats { flex-wrap: wrap; }
-  .auth-card { padding: 28px 20px; }
+  .auth-card { padding: 22px 16px; }
+  .doc-page { padding: 20px 0 50px; }
+  .preview-actions { gap: 8px; }
+  .doc-type-btn { padding: 12px 10px; }
 }
+

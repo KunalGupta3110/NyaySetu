@@ -165,8 +165,14 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .chat-page { display: block; min-height: calc(100vh - var(--nav-height)); }
   .chat-sidebar { display: none; }
+  .chat-main { min-height: calc(100vh - var(--nav-height)); }
   .chat-messages { padding: 20px 16px 8px; }
-  .msg-content { max-width: 88%; }
+  .msg { max-width: 100%; }
+  .msg-content { max-width: 100%; }
+  .chat-item-text { white-space: normal; }
+  .chat-input-row { flex-direction: column; }
+  .send-btn { width: 100%; }
   .chat-input-wrap { padding: 12px 16px 16px; }
 }
