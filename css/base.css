@@ -83,7 +83,8 @@ input, textarea, select { font-family: 'DM Sans', sans-serif; }
 /* ── NAV ── */
 #nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: 64px; display: flex; align-items: center; padding: 0 2rem;
+  height: 64px; display: flex; align-items: center; justify-content: center;
+  padding: 0 1.4rem;
   background: rgba(10,10,10,0.88);
   backdrop-filter: blur(24px) saturate(180%);
   border-bottom: 1px solid var(--border);
@@ -155,7 +156,16 @@ input, textarea, select { font-family: 'DM Sans', sans-serif; }
 }
 .nav-logo-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 600; color: var(--tp); letter-spacing: -.3px; }
 
-.nav-tabs { display: flex; align-items: center; gap: 2px; margin-left: 28px; }
+.nav-tabs { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; min-width: 0; }
+.nav-inner {
+  width: min(1300px, 100%);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
 .nav-tab {
   padding: 7px 14px; border-radius: 8px; font-size: 13px; font-weight: 500;
   color: var(--ts); background: transparent; border: none;
@@ -165,7 +175,7 @@ input, textarea, select { font-family: 'DM Sans', sans-serif; }
 .nav-tab:hover  { color: var(--tp); background: var(--bg2); }
 .nav-tab.active { color: var(--tp); background: var(--bg2); border: 1px solid var(--border); }
 
-.nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.nav-right { margin-left: auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
 .nav-icon-btn {
   width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border);
   background: transparent; color: var(--ts); display: flex; align-items: center;
@@ -183,6 +193,39 @@ input, textarea, select { font-family: 'DM Sans', sans-serif; }
 .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(201,169,110,.3); }
 .btn-primary:disabled { opacity: .45; transform: none; cursor: not-allowed; box-shadow: none; }
 
+.btn-premium {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 12px 24px; min-height: 46px;
+  border-radius: 999px; border: none;
+  background: linear-gradient(135deg, var(--premium-start), var(--premium-end));
+  color: var(--premium-text); font-size: 14px; font-weight: 700;
+  text-shadow: 0 1px 2px rgba(255,255,255,.12);
+  box-shadow: 0 12px 32px rgba(214,180,110,.22);
+  transition: transform var(--t) var(--ease), box-shadow var(--t) var(--ease), opacity var(--t) var(--ease), filter var(--t) var(--ease);
+}
+.btn-premium:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 42px rgba(214,180,110,.32);
+}
+.btn-premium:active {
+  transform: translateY(0);
+  box-shadow: 0 10px 22px rgba(214,180,110,.24);
+}
+.btn-premium:disabled,
+.btn-premium.disabled {
+  opacity: 0.55; cursor: not-allowed; transform: none;
+  box-shadow: none; filter: grayscale(.1);
+}
+.btn-premium.loading {
+  pointer-events: none;
+  opacity: 0.85;
+}
+.btn-premium.loading::after {
+  content: 'Loading...';
+  font-size: 12px;
+  margin-left: 8px;
+}
+
 .btn-ghost {
   display: inline-flex; align-items: center; gap: 8px; justify-content: center;
   padding: 11px 24px; background: transparent; color: var(--ts);
@@ -195,7 +238,12 @@ input, textarea, select { font-family: 'DM Sans', sans-serif; }
 .btn-nav { padding: 8px 18px; border-radius: 8px; border: none; background: var(--accent); color: #0A0A0A; font-size: 13px; font-weight: 600; transition: all var(--t) var(--ease); min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
 .btn-nav:hover { background: var(--accent2); transform: translateY(-1px); }
 .nav-user-name { max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--ts); font-size: 12.5px; }
-
+@media (max-width: 1160px) {
+  .nav-tab { padding: 6px 10px; font-size: 12.75px; }
+  .nav-tabs { gap: 8px; }
+  .btn-nav { padding: 7px 14px; font-size: 12.75px; min-height: 40px; }
+  .lang-select { min-width: 120px; }
+}
 /* ── TYPOGRAPHY ── */
 .eyebrow {
   font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;

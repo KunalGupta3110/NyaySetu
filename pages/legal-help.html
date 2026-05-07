@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal Help & Lawyer Matching - NyaySetu</title>
+<link rel="stylesheet" href="../css/base.css">
+<style>
+html, body { overflow-x: hidden; }
+.legal-help-hero {
+  position: relative;
+  padding: 92px 0 72px;
+  background: linear-gradient(140deg, rgba(200,164,90,.12), transparent 42%), radial-gradient(circle at 20% 15%, rgba(255,255,255,.08), transparent 28%), linear-gradient(180deg, rgba(9,9,9,.96), rgba(9,9,9,.96));
+  overflow: hidden;
+}
+.legal-help-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 80% 20%, rgba(201,169,110,.08), transparent 26%), radial-gradient(circle at 14% 70%, rgba(255,255,255,.05), transparent 20%);
+  pointer-events: none;
+}
+.legal-help-hero .hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.legal-help-hero .eyebrow { margin-bottom: 22px; }
+.legal-help-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(42px, 5vw, 68px); line-height: 1.02; margin-bottom: 24px; }
+.legal-help-hero p { max-width: 700px; margin: 0 auto 34px; color: var(--ts); font-size: 17px; line-height: 1.85; }
+.legal-help-hero .hero-actions { display: inline-flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+.legal-help-hero .hero-actions .btn-primary { min-width: 170px; }
+.legal-help-hero .hero-actions .btn-premium { min-width: 170px; }
+
+.case-posting, .lawyer-matching, .process-timeline, .trust-grid-section {
+  padding: 72px 0;
+}
+.case-posting .section-header,
+.lawyer-matching .section-header,
+.process-timeline .section-header,
+.trust-grid-section .section-header {
+  margin-bottom: 42px;
+}
+.case-posting .card, .lawyer-matching .card, .trust-card { background: var(--bg1); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.case-form {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.case-form .form-panel {
+  padding: 28px;
+  border-radius: 24px;
+}
+.case-form .form-panel h3 { margin-bottom: 18px; }
+.form-row.double {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.input-group label { margin-bottom: 8px; display: inline-flex; font-weight: 600; color: var(--ts); font-size: 12.5px; text-transform: uppercase; letter-spacing: .8px; }
+.upload-note { font-size: 12px; color: var(--tm); margin-top: 8px; }
+.lawyer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+.lawyer-card {
+  padding: 26px;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.lawyer-card .avatar {
+  width: 62px; height: 62px; border-radius: 18px;
+  background: linear-gradient(135deg, rgba(201,169,110,.16), rgba(255,255,255,.08));
+  display: grid; place-items: center;
+  font-size: 30px;
+}
+.lawyer-card h3 { font-size: 18px; margin: 0; }
+.lawyer-card p { margin: 0; color: var(--ts); line-height: 1.6; }
+.badge-group { display: flex; flex-wrap: wrap; gap: 10px; }
+.badge { background: rgba(201,169,110,.08); color: var(--accent); padding: 7px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.lawyer-card .lawyer-footer { display: flex; justify-content: space-between; gap: 14px; align-items: center; }
+.lawyer-card .lawyer-footer .rating { color: var(--accent); font-weight: 700; }
+
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 20px;
+}
+.process-step {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 26px;
+  text-align: center;
+}
+.process-step span { display: block; margin-bottom: 14px; font-size: 26px; }
+.process-step h4 { margin-bottom: 12px; }
+.process-step p { color: var(--ts); font-size: 14px; line-height: 1.75; }
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+.trust-card { padding: 26px; border-radius: 24px; text-align: left; }
+.trust-card .trust-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 14px; background: rgba(201,169,110,.12); font-size: 18px; margin-bottom: 16px; }
+.trust-card h3 { margin-bottom: 10px; }
+.trust-card p { color: var(--ts); line-height: 1.75; }
+
+@media (max-width: 1180px) {
+  .case-form { grid-template-columns: 1fr; }
+  .lawyer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .legal-help-hero { padding: 72px 0 48px; }
+  .legal-help-hero .hero-content { padding: 0 16px; }
+  .hero-actions { width: 100%; justify-content: center; }
+  .lawyer-grid, .process-grid, .trust-grid { grid-template-columns: 1fr; }
+  .case-posting, .lawyer-matching, .process-timeline, .trust-grid-section { padding: 56px 0; }
+  .case-form { gap: 18px; }
+  .case-form .form-panel { padding: 22px; }
+}
+</style>
+</head>
+<body data-page="legal-help">
+<script src="../js/utils.js"></script>
+<script src="../js/nav.js"></script>
+<script>injectNav();</script>
+<main class="page-wrap">
+  <section class="legal-help-hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="eyebrow">Legal Help for Every Case</div>
+        <h1>Professional Legal Help, Simplified</h1>
+        <p>Upload your case and connect with verified legal professionals. Track every step from case submission to lawyer matching and verification.</p>
+        <div class="hero-actions">
+          <a href="documents.html" class="btn-primary">Post Your Case</a>
+          <a href="#lawyer-match" class="btn-premium">🛡️ Connect with Lawyers</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-posting">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Submit Your Case</div>
+        <h2 class="section-title">Upload your issue and let our experts guide you.</h2>
+        <p class="section-subtitle">Our legal intake form is fast, secure, and designed to capture the core details of your matter.</p>
+      </div>
+      <div class="case-form">
+        <div class="form-panel card">
+          <h3>Case Details</h3>
+          <div class="form-row double">
+            <div class="form-group">
+              <label for="case-title">Case Title</label>
+              <input id="case-title" class="form-input" type="text" placeholder="Enter a short case title" />
+            </div>
+            <div class="form-group">
+              <label for="case-type">Issue Type</label>
+              <select id="case-type" class="form-select">
+                <option value="family">Family Law</option>
+                <option value="civil">Civil Dispute</option>
+                <option value="criminal">Criminal Defense</option>
+                <option value="property">Property & Land</option>
+                <option value="consumer">Consumer Rights</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="case-desc">Description</label>
+            <textarea id="case-desc" class="form-textarea" placeholder="Describe the dispute, timeline, and outcome you need."></textarea>
+          </div>
+          <div class="form-row double">
+            <div class="form-group">
+              <label for="case-location">Location</label>
+              <input id="case-location" class="form-input" type="text" placeholder="City, State" />
+            </div>
+            <div class="form-group">
+              <label for="case-language">Preferred Language</label>
+              <select id="case-language" class="form-select">
+                <option value="en">English</option>
+                <option value="hi">हिन्दी</option>
+                <option value="ta">தமிழ்</option>
+                <option value="bn">বাংলা</option>
+                <option value="mr">मराठी</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="case-files">Upload Documents</label>
+            <input id="case-files" class="form-input" type="file" multiple />
+            <p class="upload-note">Attach evidence, notices, photos, or supporting documents securely.</p>
+          </div>
+          <button class="btn-premium" type="button" onclick="submitLegalHelpForm()">Submit Case Request</button>
+        </div>
+        <div class="card" style="padding: 28px; border-radius: 24px;">
+          <h3>What happens next?</h3>
+          <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; color: var(--ts);">
+            <li>• Our legal intake team reviews your submission.</li>
+            <li>• Verified lawyers are matched to your case profile.</li>
+            <li>• You receive notifications at every stage.</li>
+            <li>• Document review and verification are completed securely.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="lawyer-matching" id="lawyer-match">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Lawyer Matching</div>
+        <h2 class="section-title">Connect with verified attorneys instantly.</h2>
+        <p class="section-subtitle">Review specialty, experience, ratings, and language support before you connect.</p>
+      </div>
+      <div class="lawyer-grid">
+        <article class="lawyer-card card">
+          <div class="avatar">👨‍⚖️</div>
+          <h3>Adv. Riya Sharma</h3>
+          <p>Specialist in Family & Consumer Law</p>
+          <div class="badge-group">
+            <span class="badge">Verified</span>
+            <span class="badge">10+ yrs exp</span>
+          </div>
+          <div class="badge-group">
+            <span class="badge">Hindi</span>
+            <span class="badge">English</span>
+          </div>
+          <div class="lawyer-footer">
+            <div class="rating">4.9 ★</div>
+            <a href="join-lawyer.html" class="btn-premium">Connect</a>
+          </div>
+        </article>
+        <article class="lawyer-card card">
+          <div class="avatar">👩‍⚖️</div>
+          <h3>Adv. Ankit Patel</h3>
+          <p>Criminal Defense & Compliance</p>
+          <div class="badge-group">
+            <span class="badge">Verified</span>
+            <span class="badge">8 yrs exp</span>
+          </div>
+          <div class="badge-group">
+            <span class="badge">English</span>
+            <span class="badge">Marathi</span>
+          </div>
+          <div class="lawyer-footer">
+            <div class="rating">4.8 ★</div>
+            <a href="join-lawyer.html" class="btn-primary">Connect</a>
+          </div>
+        </article>
+        <article class="lawyer-card card">
+          <div class="avatar">🧑‍⚖️</div>
+          <h3>Adv. Meera Iyer</h3>
+          <p>Property, Drafting & Litigation</p>
+          <div class="badge-group">
+            <span class="badge">Verified</span>
+            <span class="badge">11 yrs exp</span>
+          </div>
+          <div class="badge-group">
+            <span class="badge">Tamil</span>
+            <span class="badge">English</span>
+          </div>
+          <div class="lawyer-footer">
+            <div class="rating">4.9 ★</div>
+            <a href="join-lawyer.html" class="btn-primary">Connect</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="process-timeline">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Legal Process</div>
+        <h2 class="section-title">A clear path from filing to resolution.</h2>
+        <p class="section-subtitle">Stay informed at every step while our platform connects you with the right lawyer.</p>
+      </div>
+      <div class="process-grid">
+        <div class="process-step card">
+          <span>1</span>
+          <h4>AI Guidance</h4>
+          <p>Get case filing support and document recommendations from our intelligent assistant.</p>
+        </div>
+        <div class="process-step card">
+          <span>2</span>
+          <h4>Case Preparation</h4>
+          <p>Organize evidence, define objectives, and prepare a secure case summary.</p>
+        </div>
+        <div class="process-step card">
+          <span>3</span>
+          <h4>Lawyer Matching</h4>
+          <p>Connect with specialists who suit your legal matter and language preferences.</p>
+        </div>
+        <div class="process-step card">
+          <span>4</span>
+          <h4>Verification</h4>
+          <p>Lawyer credentials and case documents are validated through our trusted network.</p>
+        </div>
+        <div class="process-step card">
+          <span>5</span>
+          <h4>Final Resolution</h4>
+          <p>Track progress and receive guidance until your legal outcome is delivered.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust-grid-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Trusted Support</div>
+        <h2 class="section-title">Secure, verified, and client-first.</h2>
+        <p class="section-subtitle">NyaySetu connects you with lawyers who are verified, responsive, and privacy-focused.</p>
+      </div>
+      <div class="trust-grid">
+        <div class="trust-card card">
+          <span class="trust-icon">✅</span>
+          <h3>Verified Lawyers</h3>
+          <p>Every lawyer on the platform passes a rigorous verification process before accepting cases.</p>
+        </div>
+        <div class="trust-card card">
+          <span class="trust-icon">🔒</span>
+          <h3>Secure Handling</h3>
+          <p>Your documents and case details remain encrypted and protected at every step.</p>
+        </div>
+        <div class="trust-card card">
+          <span class="trust-icon">📁</span>
+          <h3>Document Review</h3>
+          <p>Trusted experts review your submissions and help organize the strongest evidence package.</p>
+        </div>
+        <div class="trust-card card">
+          <span class="trust-icon">🤝</span>
+          <h3>Responsive Support</h3>
+          <p>Ongoing updates give you confidence and clarity across filing, matching, and resolution.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+function submitLegalHelpForm() {
+  const title = document.getElementById('case-title').value.trim();
+  const type = document.getElementById('case-type').value;
+  const desc  = document.getElementById('case-desc').value.trim();
+  const loc   = document.getElementById('case-location').value.trim();
+  const lang  = document.getElementById('case-language').value;
+
+  if (!title || !type || !desc || !loc) {
+    const message = 'Please fill in all required case fields to submit your request.';
+    if (typeof showToast === 'function') return showToast(message, '⚠');
+    return alert(message);
+  }
+
+  const loadingMessage = document.createElement('div');
+  loadingMessage.style.position = 'fixed';
+  loadingMessage.style.left = '50%';
+  loadingMessage.style.top = '100px';
+  loadingMessage.style.transform = 'translateX(-50%)';
+  loadingMessage.style.padding = '14px 20px';
+  loadingMessage.style.borderRadius = '14px';
+  loadingMessage.style.background = 'rgba(0,0,0,0.75)';
+  loadingMessage.style.color = '#fff';
+  loadingMessage.textContent = 'Submitting your case…';
+  document.body.appendChild(loadingMessage);
+  setTimeout(() => {
+    document.body.removeChild(loadingMessage);
+    const message = 'Your case request has been received. A verified expert will connect shortly.';
+    if (typeof showToast === 'function') return showToast(message, '✔');
+    alert(message);
+  }, 1000);
+}
+</script>
+<script>
+if (typeof initScrollAnim === 'function') initScrollAnim();
+</script>
+</body>
+</html>
